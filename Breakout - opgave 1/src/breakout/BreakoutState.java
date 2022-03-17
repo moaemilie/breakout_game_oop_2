@@ -19,7 +19,6 @@ public class BreakoutState {
 	 * @throws IllegalArgumentException | bottomRight == null
 	 * @throws IllegalArgumentException | paddle == null
 	 * 
-	 * 
 	 * @post | Arrays.equals(getBalls(), balls)
 	 * @post | Arrays.equals(getBlocks(), blocks)
 	 * @post | getPaddle() == paddle
