@@ -34,7 +34,14 @@ class BreakoutStateTest {
 		assert breakout.getBalls()[0].getCenter().equals(newBalls[0].getCenter());
 		assertEquals(breakout.getBalls()[0].getVelocity().getX(), newBalls[0].getVelocity().getX());
 		assertEquals(breakout.getBalls()[0].getVelocity().getY(), newBalls[0].getVelocity().getY());
-	
+		
+		Point paddle_center = breakout.getPaddle().getCenter();
+		breakout.movePaddleRight();
+		assertEquals(breakout.getPaddle().getCenter().getX(), paddle_center.getX()+10);
+		
+		Point old_paddle_center = breakout.getPaddle().getCenter();
+		breakout.movePaddleLeft();
+		assertEquals(breakout.getPaddle().getCenter().getX(), old_paddle_center.getX()-10);
 		
 	}
 
