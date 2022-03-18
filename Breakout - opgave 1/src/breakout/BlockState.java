@@ -22,10 +22,10 @@ public class BlockState {
 	 * @pre | top_left.getX() >= 0 
 	 * @pre | top_left.getY() >= 0 
 	 * @pre | top_left.isUpAndLeftFrom(bottom_right)
+	 * 
 	 * @post | getTopLeft() == top_left
 	 * @post | getBottomRight() == bottom_right
 	 */
-	
 	public BlockState(Point top_left, Point bottom_right) {
 		this.top_left = top_left; 
 		this.bottom_right = bottom_right;
