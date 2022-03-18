@@ -12,9 +12,20 @@ import java.util.stream.IntStream;
  */
 
 public class BreakoutState {
-	
+	/**
+	 * @invar | balls != null
+	 * 
+	 * @representationObject
+	 */
 	private BallState[] balls;
+	
+	/**
+	 * @invar | blocks != null
+	 * 
+	 * @representationObject
+	 */
 	private BlockState[] blocks;
+	
 	private Point bottomRight;
 	private PaddleState paddle;
 	
@@ -48,14 +59,20 @@ public class BreakoutState {
 		this.paddle = paddle;
 	}
 	
-	/** Return this breakout state's list of balls. */
+	/** Return this breakout state's list of balls. 
+	 * @post | result != null
+	 * @creates | result
+	 */
 	public BallState[] getBalls() {
-		return balls;
+		return balls.clone();
 	}
 
-	/** Return this breakout state's list of blocks. */
+	/** Return this breakout state's list of blocks. 
+	 * @post | result != null
+	 * @creates | result 
+	 */
 	public BlockState[] getBlocks() {
-		return blocks;
+		return blocks.clone();
 	}
 	
 	/** Return this breakout state's paddle. */
@@ -70,7 +87,6 @@ public class BreakoutState {
 	
 	/**
 	 * This method performs movement of a ball, including checks of whether the ball hits any other elements.
-	 * 
 	 * 
 	 * @mutates_properties | getBalls()
 	 * 
