@@ -17,7 +17,8 @@ class BreakoutStateTest {
 		Vector paddlesize = new Vector(3,4);
 		
 		BallState[] balls = {new BallState(center, diameter, speed), 
-		                     new BallState(center, diameter+1, speed)};
+		                     //new BallState(center, diameter+1, speed)
+				};
 		BlockState[] blocks = {new BlockState(TL, BR)}; 
 		PaddleState paddle = new PaddleState(paddlecenter, paddlesize);
 		BreakoutState breakout = new BreakoutState(balls, blocks, BR, paddle);
@@ -27,7 +28,12 @@ class BreakoutStateTest {
 		assertEquals(breakout.getPaddle(), paddle);
 		assertEquals(breakout.getBottomRight(), BR);
 		
-		
+		BallState[] newBalls = {new BallState(new Point(4,5), diameter, speed)};
+		breakout.tick(2);
+		assertEquals(breakout.getBalls()[0].getCenter().getX(), newBalls[0].getCenter().getX());
+		assertEquals(breakout.getBalls()[0].getCenter().getY(), newBalls[0].getCenter().getY());
+		assertEquals(breakout.getBalls()[0].getVelocity().getX(), newBalls[0].getVelocity().getX());
+	
 		
 	}
 
