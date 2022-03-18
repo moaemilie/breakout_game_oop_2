@@ -45,4 +45,11 @@ public class BallState {
 	public Vector getVelocity() {
 		return INIT_BALL_VELOCITY;
 	}
+	
+	/**
+	 * Returns the diameter of the ball
+	 */
+	public int getDiameter() {
+		return diameter;
+	}
 }
