@@ -75,8 +75,20 @@ public class BreakoutState {
 	 * 
 	 * @post |
 	 * 
+	 * @mutates_properties | getBalls()
+	 * 
 	 */
 	public void tick(int paddleDir) {
+		int i;
+		BallState[] newBalls = new BallState[balls.length];
+		for (i = 0; i < balls.length; i++) {
+			Vector velocity = balls[i].getVelocity();
+			Point center = balls[i].getCenter();
+			Point newCenter = new Point(center.getX() + velocity.getX(), center.getY() + velocity.getY());
+			newBalls[i] = new BallState(newCenter, balls[i].getDiameter(), velocity);
+		}
+		this.balls = newBalls;
+			
 	}
 
 	public void movePaddleRight() {
