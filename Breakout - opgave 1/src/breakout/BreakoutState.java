@@ -33,28 +33,28 @@ public class BreakoutState {
 	 * 
 	 * Return a new breakout game.
 	 * 
-	 * @throws IllegalArgumentException | Arrays.stream(balls).allMatch(e -> e!= null)
-	 * @throws IllegalArgumentException | Arrays.stream(blocks).allMatch(e -> e!= null)
+	 * @throws IllegalArgumentException | Arrays.stream(input_balls).allMatch(e -> e!= null)
+	 * @throws IllegalArgumentException | Arrays.stream(input_blocks).allMatch(e -> e!= null)
 	 * @throws IllegalArgumentException | bottomRight == null
 	 * @throws IllegalArgumentException | paddle == null
 	 * 
-	 * @post | Arrays.equals(getBalls(), balls)
-	 * @post | Arrays.equals(getBlocks(), blocks)
+	 * @post | Arrays.equals(getBalls(), input_balls)
+	 * @post | Arrays.equals(getBlocks(), input_blocks)
 	 * @post | getPaddle() == paddle
 	 * @post | getBottomRight() == bottomRight
 	 */
-	public BreakoutState(BallState[] balls, BlockState[] blocks, Point bottomRight, PaddleState paddle) {
-		if(!Arrays.stream(balls).allMatch(e -> e!= null)) {
+	public BreakoutState(BallState[] input_balls, BlockState[] input_blocks, Point bottomRight, PaddleState paddle) {
+		if(!Arrays.stream(input_balls).allMatch(e -> e!= null)) {
 			throw new IllegalArgumentException();}
-		if(!Arrays.stream(blocks).allMatch(e -> e!= null)) {
+		if(!Arrays.stream(input_blocks).allMatch(e -> e!= null)) {
 			throw new IllegalArgumentException();}
 		if(bottomRight == null) {
 			throw new IllegalArgumentException();}
 		if(paddle == null) {
 			throw new IllegalArgumentException();}
 		
-		this.balls = balls;
-		this.blocks = blocks;
+		balls = input_balls;
+		blocks = input_blocks;
 		this.bottomRight = bottomRight;
 		this.paddle = paddle;
 	}
@@ -88,7 +88,7 @@ public class BreakoutState {
 	/**
 	 * This method performs movement of a ball, including checks of whether the ball hits any other elements.
 	 * 
-	 * @mutates_properties | getBalls()
+	 * @mutates | this
 	 * 
 	 */
 	public void tick(int paddleDir) {
@@ -100,7 +100,7 @@ public class BreakoutState {
 			Point newCenter = new Point(center.getX() + velocity.getX(), center.getY() + velocity.getY());
 			newBalls[i] = new BallState(newCenter, balls[i].getDiameter(), velocity);
 		}
-		this.balls = newBalls;
+		balls = newBalls;
 			
 	}
 
