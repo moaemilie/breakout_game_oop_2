@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 //Defensive programming
 /**
  * 
- * This class represents the state of the breakout game.
+ * Each instance of this class stores a breakout game board.
  *
  */
 
@@ -31,7 +31,7 @@ public class BreakoutState {
 	
 	/**
 	 * 
-	 * Return a new breakout game.
+	 * Initialize breakout game with given balls, blocks, bottom right corner and paddle.
 	 * 
 	 * @throws IllegalArgumentException | Arrays.stream(input_balls).allMatch(e -> e!= null)
 	 * @throws IllegalArgumentException | Arrays.stream(input_blocks).allMatch(e -> e!= null)
@@ -59,7 +59,9 @@ public class BreakoutState {
 		this.paddle = paddle;
 	}
 	
-	/** Return this breakout state's list of balls. 
+	/** 
+	 * Return this breakout state's list of balls. 
+	 * 
 	 * @post | result != null
 	 * @creates | result
 	 */
@@ -67,7 +69,9 @@ public class BreakoutState {
 		return balls.clone();
 	}
 
-	/** Return this breakout state's list of blocks. 
+	/** 
+	 * Return this breakout state's list of blocks. 
+	 * 
 	 * @post | result != null
 	 * @creates | result 
 	 */
@@ -89,7 +93,6 @@ public class BreakoutState {
 	 * This method performs movement of a ball, including checks of whether the ball hits any other elements.
 	 * 
 	 * @mutates | this
-	 * 
 	 */
 	public void tick(int paddleDir) {
 		int i;
@@ -103,10 +106,20 @@ public class BreakoutState {
 		balls = newBalls;
 			
 	}
-
+	
+	/**
+	 * This method moves the paddle 10 steps to the right.
+	 * 
+	 * @mutates | this
+	 */
 	public void movePaddleRight() {
 	}
-
+	
+	/**
+	 * This method moves the paddle 10 steps to the left.
+	 * 
+	 * @mutates | this
+	 */
 	public void movePaddleLeft() {
 	}
 	
