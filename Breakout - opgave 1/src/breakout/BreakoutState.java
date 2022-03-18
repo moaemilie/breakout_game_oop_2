@@ -71,9 +71,6 @@ public class BreakoutState {
 	/**
 	 * This method performs movement of a ball, including checks of whether the ball hits any other elements.
 	 * 
-	 * @throws IllegalArgumentException | 
-	 * 
-	 * @post |
 	 * 
 	 * @mutates_properties | getBalls()
 	 * 
