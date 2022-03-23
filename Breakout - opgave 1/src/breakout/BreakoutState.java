@@ -113,6 +113,14 @@ public class BreakoutState {
 	 * @mutates | this
 	 */
 	public void movePaddleRight() {
+		Point center = paddle.getCenter();
+		int newX = center.getX() + 10;
+		Point newCenter = new Point(newX, center.getY());
+			
+		Vector size = new Vector(center.getX() - paddle.getTopLeft().getX(), center.getY() - paddle.getTopLeft().getY());
+		PaddleState newPaddle = new PaddleState(newCenter, size);
+		
+		this.paddle = newPaddle;
 	}
 	
 	/**
@@ -121,6 +129,14 @@ public class BreakoutState {
 	 * @mutates | this
 	 */
 	public void movePaddleLeft() {
+		Point center = paddle.getCenter();
+		int newX = center.getX() - 10;
+		Point newCenter = new Point(newX, center.getY());
+			
+		Vector size = new Vector(center.getX() - paddle.getTopLeft().getX(), center.getY() - paddle.getTopLeft().getY());
+		PaddleState newPaddle = new PaddleState(newCenter, size);
+		
+		this.paddle = newPaddle;
 	}
 	
 	public boolean isWon() {
