@@ -15,6 +15,8 @@ public class PaddleState {
 	/**
 	 * @pre | center.getX() > 0 
 	 * @pre | center.getY() > 0 
+	 * 
+	 * @post |  getCenter() == center
 	 */
 	
 	public PaddleState(Point center, Vector size) {
@@ -37,5 +39,14 @@ public class PaddleState {
 	public Point getBottomRight(){
 		return center.plus(size);
 	}
+	
+	/**
+	 * @post | result.getX() > 0 
+	 * @post | result.getY() > 0 
+	 */
+	public Point getCenter(){
+		return center;
+	}
+	
 }
 	
