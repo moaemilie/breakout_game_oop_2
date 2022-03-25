@@ -105,6 +105,7 @@ public class BreakoutState {
 		}
 		
 		for (i = 0; i < newBalls.length; i++) {
+			
 			// Checks if the ball hits the left wall and creates a mirrored ball
 			if(newBalls[i].getCenter().getX() - (newBalls[i].getDiameter()/2) <= 0 && newBalls[i].getVelocity().product(Vector.LEFT) > 0) {
 				BallState newBallState = new BallState(newBalls[i].getCenter(),newBalls[i].getDiameter(), newBalls[i].getVelocity().mirrorOver(Vector.LEFT));
@@ -112,10 +113,12 @@ public class BreakoutState {
 			}
 			
 			// Checks if the ball hits the right wall and creates a mirrored ball
-			if(newBalls[i].getCenter().getX() + (newBalls[i].getDiameter()/2) >= bottomRight.getX() && newBalls[i].getVelocity().product(Vector.RIGHT) > 0) {
+			if((newBalls[i].getCenter().getX() + (newBalls[i].getDiameter()/2)) >= 10 && newBalls[i].getVelocity().product(Vector.RIGHT) > 0) {
 				BallState newBallState = new BallState(newBalls[i].getCenter(),newBalls[i].getDiameter(), newBalls[i].getVelocity().mirrorOver(Vector.RIGHT));
 				newBalls[i] = newBallState;
 			}
+			
+			
 			
 			// Checks if the ball hits the top and creates a mirrored ball
 			if(newBalls[i].getCenter().getY() + (newBalls[i].getDiameter()/2) <= 0 && newBalls[i].getVelocity().product(Vector.UP) > 0) {
