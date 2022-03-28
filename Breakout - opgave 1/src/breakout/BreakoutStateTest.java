@@ -14,8 +14,8 @@ class BreakoutStateTest {
 		Point TL = new Point(8,0);
 		Point BR = new Point(10,1);
 		Point BRMap = new Point(10,10);
-		Point paddlecenter = new Point(10,10);
-		Vector paddlesize = new Vector(2,1);
+		Point paddlecenter = new Point(5,9);
+		Vector paddlesize = new Vector(1,1);
 		
 		BallState[] balls = {new BallState(center, diameter, speed), 
 		                     //new BallState(center, diameter+1, speed)
@@ -71,6 +71,20 @@ class BreakoutStateTest {
 		breakoutT.tick(1);
 		assertEquals(breakoutT.getBalls()[0].getVelocity().getX(), speedT.mirrorOver(Vector.UP).getX());
 		assertEquals(breakoutT.getBalls()[0].getVelocity().getY(), speedT.mirrorOver(Vector.UP).getY());
+		
+		
+		// Test hits the botom of the feild
+		
+		Point BallDown = new Point(8,8);
+		Vector speedDown = new Vector(0, 4);
+		
+		BallState[] ballsDown = {new BallState(BallDown, diameter, speedDown)};
+		BreakoutState breakoutDown = new BreakoutState(ballsDown, blocks, BRMap, paddle);
+		
+		breakoutDown.tick(1);
+		
+		assert(breakoutNR.getBalls().length == 1);
+		assert(breakoutDown.getBalls().length == 0);
 		
 	}
 
