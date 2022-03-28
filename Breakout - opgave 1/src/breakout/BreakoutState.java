@@ -141,23 +141,23 @@ public class BreakoutState {
 		balls = newBottomBalls;
 		
 		// Check if the ball hits a block and removes the block and bounces the ball
-		ArrayList<BlockState> blocksNotHit = new ArrayList<BlockState>();
-		for (int i = 0 ;i < balls.length; i++) {
-			for (int j =0; j < blocks.length; j++) {
-				if(blocks[j].getTopLeft().getX() >= (balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) &&
-						(balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) >= blocks[j].getBottomRight().getX() &&
-						blocks[j].getBottomRight().getY() <= (balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) &&
-						(balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) <= blocks[j].getTopLeft().getY()){
-					blocksNotHit.add(blocks[i]);}
-				else{
-					Point HorUpCentrum = new Point((blocks[i].getBottomRight().getX() - blocks[i].getTopLeft().getX())/2, blocks[i].getBottomRight().getY() - blocks[i].getTopLeft().getY())/2)
+		//ArrayList<BlockState> blocksNotHit = new ArrayList<BlockState>();
+		//for (int i = 0 ;i < balls.length; i++) {
+			//for (int j =0; j < blocks.length; j++) {
+				//if(blocks[j].getTopLeft().getX() >= (balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) &&
+						//(balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) >= blocks[j].getBottomRight().getX() &&
+						//blocks[j].getBottomRight().getY() <= (balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) &&
+						//(balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) <= blocks[j].getTopLeft().getY()){
+				//	blocksNotHit.add(blocks[i]);}
+				//else{
+					//if 
 					
-				}
-			}
-		}
-		BlockState[] Newblocks = new BlockState[blocksNotHit.size()];
-		Newblocks = blocksNotHit.toArray(Newblocks);
-		blocks = Newblocks;
+				//}
+			//}
+		//}
+		//BlockState[] Newblocks = new BlockState[blocksNotHit.size()];
+		//Newblocks = blocksNotHit.toArray(Newblocks);
+		//blocks = Newblocks;
 
 		
 }
@@ -196,11 +196,27 @@ public class BreakoutState {
 		this.paddle = newPaddle;
 	}
 	
+	/**
+	 * This method checks if the game is won, by checking if there is no blocks left, but there are balls left.
+	 */
 	public boolean isWon() {
-		return false;
+		if(blocks.length == 0 && balls.length != 0){
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
-
+	/**
+	 * This method checks if the game is lost, by looking if there is any balls left.
+	 * 
+	 */
 	public boolean isDead() {
-		return false;
+		if(balls.length == 0){
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
