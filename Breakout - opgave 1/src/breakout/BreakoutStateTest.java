@@ -17,25 +17,26 @@ class BreakoutStateTest {
 		Point paddlecenter = new Point(5,9);
 		Vector paddlesize = new Vector(1,1);
 		
-		BallState[] balls = {new BallState(center, diameter, speed), 
-		                     //new BallState(center, diameter+1, speed)
-				};
+		BallState[] balls = {new BallState(center, diameter, speed)};
 		BlockState[] blocks = {new BlockState(TL, BR)}; 
 		PaddleState paddle = new PaddleState(paddlecenter, paddlesize);
 		BreakoutState breakout = new BreakoutState(balls, blocks, BRMap, paddle);
 		
+		// Test that the get methods
 		assert breakout.getBalls()[0].getCenter().equals(balls[0].getCenter());
 		assert breakout.getBlocks()[0].getTopLeft().equals(blocks[0].getTopLeft());
 		assert breakout.getBlocks()[0].getBottomRight().equals(blocks[0].getBottomRight());
 		assertEquals(breakout.getPaddle(), paddle);
 		assertEquals(breakout.getBottomRight(), BRMap);
 		
+		// Test that the velocity is updated afther the tick method
 		BallState[] newBalls = {new BallState(new Point(4,4), diameter, speed)};
 		breakout.tick(2);
 		assert breakout.getBalls()[0].getCenter().equals(newBalls[0].getCenter());
-		//assertEquals(breakout.getBalls()[0].getVelocity().getX(), newBalls[0].getVelocity().getX());
-		//assertEquals(breakout.getBalls()[0].getVelocity().getY(), newBalls[0].getVelocity().getY());
+		assertEquals(breakout.getBalls()[0].getVelocity().getX(), newBalls[0].getVelocity().getX());
+		assertEquals(breakout.getBalls()[0].getVelocity().getY(), newBalls[0].getVelocity().getY());
 		
+		// Test that the paddle is moved left and right afther the methodes is called
 		Point paddle_center = breakout.getPaddle().getCenter();
 		breakout.movePaddleRight();
 		assertEquals(breakout.getPaddle().getCenter().getX(), paddle_center.getX()+10);
@@ -74,7 +75,6 @@ class BreakoutStateTest {
 		
 		
 		// Test hits the botom of the feild
-		
 		Point BallDown = new Point(8,8);
 		Vector speedDown = new Vector(0, 4);
 		
@@ -86,6 +86,30 @@ class BreakoutStateTest {
 		assert(breakoutNR.getBalls().length == 1);
 		assert(breakoutDown.getBalls().length == 0);
 		
+		// Checks if the game is won
+		BlockState[] blocksWon = {}; 
+		BreakoutState breakoutWon = new BreakoutState(balls, blocksWon, BRMap, paddle);
+		breakoutWon.tick(1);
+		assert(breakoutWon.isWon() == true);
+		
+		// Check that the game is not won when there are no balls left.
+		BallState[] ballsNotWon = {};
+		BlockState[] blocksNotWon = {}; 
+		BreakoutState breakoutNotWon = new BreakoutState(ballsNotWon, blocksNotWon, BRMap, paddle);
+		breakoutNotWon.tick(1);
+		assert(breakoutNotWon.isWon() == false);
+		
+		// Checks if the game is lost
+		BallState[] ballsDead = {};
+		BreakoutState breakoutDead = new BreakoutState(ballsDead, blocks, BRMap, paddle);
+		breakoutDead.tick(1);
+		assert(breakoutDead.isDead() == true);
+		
+		// Cheks that the game is not lost
+		BallState[] ballsNotDead = {new BallState(center, diameter, speed)};
+		BreakoutState breakoutNotDead = new BreakoutState(ballsNotDead, blocks, BRMap, paddle);
+		breakoutNotDead.tick(1);
+		assert(breakoutNotDead.isDead() == false);
 	}
 
 }
