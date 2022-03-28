@@ -113,7 +113,7 @@ public class BreakoutState {
 			}
 			
 			// Checks if the ball hits the right wall and creates a mirrored ball
-			if((newBalls[i].getCenter().getX() + (newBalls[i].getDiameter()/2)) >= 10 && newBalls[i].getVelocity().product(Vector.RIGHT) > 0) {
+			if((newBalls[i].getCenter().getX() + (newBalls[i].getDiameter()/2)) >= bottomRight.getX() && newBalls[i].getVelocity().product(Vector.RIGHT) > 0) {
 				BallState newBallState = new BallState(newBalls[i].getCenter(),newBalls[i].getDiameter(), newBalls[i].getVelocity().mirrorOver(Vector.RIGHT));
 				newBalls[i] = newBallState;
 			}
@@ -129,10 +129,9 @@ public class BreakoutState {
 		balls = newBalls;
 			
 	}
-
+		// Checks if the ball hits the bottom and removes the ball
 		ArrayList<BallState> bottomBalls = new ArrayList<BallState>();
 		for (int i = 0 ;i < newBalls.length; i++) {
-			// Checks if the ball hits the bottom and removes the ball
 			if(newBalls[i].getCenter().getY() + (newBalls[i].getDiameter()/2) <= bottomRight.getY()) {
 				bottomBalls.add(newBalls[i]);
 			}
@@ -141,6 +140,25 @@ public class BreakoutState {
 		newBottomBalls = bottomBalls.toArray(newBottomBalls);
 		balls = newBottomBalls;
 		
+		// Check if the ball hits a block and removes the block and bounces the ball
+		ArrayList<BlockState> blocksNotHit = new ArrayList<BlockState>();
+		for (int i = 0 ;i < balls.length; i++) {
+			for (int j =0; j < blocks.length; j++) {
+				if(blocks[j].getTopLeft().getX() >= (balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) &&
+						(balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) >= blocks[j].getBottomRight().getX() &&
+						blocks[j].getBottomRight().getY() <= (balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) &&
+						(balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) <= blocks[j].getTopLeft().getY()){
+					blocksNotHit.add(blocks[i]);}
+				else{
+					Point HorUpCentrum = new Point((blocks[i].getBottomRight().getX() - blocks[i].getTopLeft().getX())/2, blocks[i].getBottomRight().getY() - blocks[i].getTopLeft().getY())/2)
+					
+				}
+			}
+		}
+		BlockState[] Newblocks = new BlockState[blocksNotHit.size()];
+		Newblocks = blocksNotHit.toArray(Newblocks);
+		blocks = Newblocks;
+
 		
 }
 		
