@@ -141,24 +141,31 @@ public class BreakoutState {
 		balls = newBottomBalls;
 		
 		// Check if the ball hits a block and removes the block and bounces the ball
-		//ArrayList<BlockState> blocksNotHit = new ArrayList<BlockState>();
-		//for (int i = 0 ;i < balls.length; i++) {
-			//for (int j =0; j < blocks.length; j++) {
-				//if(blocks[j].getTopLeft().getX() >= (balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) &&
-						//(balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) >= blocks[j].getBottomRight().getX() &&
-						//blocks[j].getBottomRight().getY() <= (balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) &&
-						//(balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) <= blocks[j].getTopLeft().getY()){
-				//	blocksNotHit.add(blocks[i]);}
-				//else{
-					//if 
+		ArrayList<BlockState> blocksNotHit = new ArrayList<BlockState>();
+		for (int i = 0 ;i < balls.length; i++) {
+			for (int j =0; j < blocks.length; j++) {
+				if(blocks[j].getTopLeft().getX() < (balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) &&
+						(balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) < blocks[j].getBottomRight().getX() &&
+						blocks[j].getBottomRight().getY() > (balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) &&
+						(balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) > blocks[j].getTopLeft().getY()){
 					
-				//}
-			//}
-		//}
+					if(balls[i].getVelocity().product(Vector.UP) > 0 && balls[i].getVelocity().product(Vector.LEFT) > 0) {
+						
+					}
+					if(balls[i].getVelocity().product(Vector.DOWN) > 0 && balls[i].getVelocity().product(Vector.RIGHT) > 0) {
+					
+					}}
+				else{
+					blocksNotHit.add(blocks[i]);
+					
+				}
+			}
+		}
 		//BlockState[] Newblocks = new BlockState[blocksNotHit.size()];
 		//Newblocks = blocksNotHit.toArray(Newblocks);
 		//blocks = Newblocks;
 
+		
 		
 }
 		
