@@ -184,18 +184,6 @@ public class BreakoutState {
 						&& topLeftY + height > blocks[j].getTopLeft().getY() 
 						&& topLeftX < blocks[j].getBottomRight().getX()
 						&& topLeftY < blocks[j].getBottomRight().getY()){
-				//if(blocks[j].getTopLeft().getX() < (balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) &&
-				//		(balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) < blocks[j].getBottomRight().getX() &&
-				//		blocks[j].getBottomRight().getY() > (balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) &&
-				//		(balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) > blocks[j].getTopLeft().getY()){
-					
-					
-					//if(balls[i].getVelocity().product(Vector.UP) > 0 && balls[i].getVelocity().product(Vector.LEFT) > 0) {
-						
-				//	}
-					//if(balls[i].getVelocity().product(Vector.DOWN) > 0 && balls[i].getVelocity().product(Vector.RIGHT) > 0) {
-					
-					//}}
 					
 					if (balls[i].getVelocity().getX() > 0){
 	                    if (checkIntersection(newCenterX, newCenterY, oldCenterX, oldCenterY,
