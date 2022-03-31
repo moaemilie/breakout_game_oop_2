@@ -148,7 +148,6 @@ public class BreakoutState {
 				BallState newBallState = new BallState(newBalls[i].getCenter(),newBalls[i].getDiameter(), newBalls[i].getVelocity().mirrorOver(Vector.UP));
 				newBalls[i] = newBallState;
 			}
-			
 		
 		balls = newBalls;
 			
@@ -168,7 +167,7 @@ public class BreakoutState {
 		ArrayList<BlockState> blocksNotHit = new ArrayList<BlockState>();
 		BallState[] newCrashBalls = new BallState[balls.length];
 		
-		for (int i = 0 ;i < balls.length; i++) {
+		for (int i = 0; i < balls.length; i++) {
 			
 			int newCenterX = balls[i].getCenter().getX();
 			int newCenterY = balls[i].getCenter().getY();
@@ -189,7 +188,7 @@ public class BreakoutState {
 					if (balls[i].getVelocity().getX() > 0){
 	                    if (checkIntersection(newCenterX, newCenterY, oldCenterX, oldCenterY,
 	                    		blocks[j].getTopLeft().getX(), blocks[j].getBottomRight().getY(),
-	                    		blocks[j].getTopLeft().getX(), blocks[j].getTopLeft().getY()){
+	                    		blocks[j].getTopLeft().getX(), blocks[j].getTopLeft().getY())){
 	                        // ball hits left wall of brick
 	                    	BallState newBallState = new BallState(balls[i].getCenter(),
 	                    			balls[i].getDiameter(), 
@@ -206,7 +205,6 @@ public class BreakoutState {
 		                    			balls[i].getDiameter(), 
 		                    			balls[i].getVelocity().mirrorOver(Vector.DOWN));
 		        				newCrashBalls[i] = newBallState;
-	                            
 	                        }
 	                    } 
 	                    else if (balls[i].getVelocity().getY() < 0){
@@ -224,8 +222,8 @@ public class BreakoutState {
 					else if (balls[i].getVelocity().getX() < 0){
 	                    if(checkIntersection(newCenterX, newCenterY, oldCenterX, oldCenterY,
 	                    		blocks[j].getBottomRight().getX(), blocks[j].getTopLeft().getY(),
-	                    		blocks[j].getBottomRight().getX(), blocks[j].getBottomRight().getY()){
-	                        // ball hits left wall of brick
+	                    		blocks[j].getBottomRight().getX(), blocks[j].getBottomRight().getY())){
+	                        // ball hits right wall of block
 	                    	BallState newBallState = new BallState(balls[i].getCenter(),
 	                    			balls[i].getDiameter(), 
 	                    			balls[i].getVelocity().mirrorOver(Vector.LEFT));
@@ -261,7 +259,6 @@ public class BreakoutState {
                 			balls[i].getDiameter(), 
                 			balls[i].getVelocity());
     				newCrashBalls[i] = newBallState;
-					
 				}
 			}
 		}
