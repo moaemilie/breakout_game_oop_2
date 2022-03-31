@@ -111,5 +111,29 @@ class BreakoutStateTest {
 		breakoutNotDead.tick(1);
 		assert(breakoutNotDead.isDead() == false);
 	}
+	
+	@Test
+	void checkIntersectionTest() {
+		int diameter = 2;
+		Point center = new Point(1,1);
+		Vector speed = new Vector(3,3); 
+		Point TL = new Point(8,0);
+		Point BR = new Point(10,1);
+		Point BRMap = new Point(10,10);
+		Point paddlecenter = new Point(5,9);
+		Vector paddlesize = new Vector(1,1);
+		
+		BallState[] balls = {new BallState(center, diameter, speed)};
+		BlockState[] blocks = {new BlockState(TL, BR)}; 
+		PaddleState paddle = new PaddleState(paddlecenter, paddlesize);
+		BreakoutState breakout = new BreakoutState(balls, blocks, BRMap, paddle);
+		
+		//Point OldCenter = new Point(7,3);
+		//Point NewCenter = new Point(8,2);
+		//Point corner1 = new Point(4,8);
+		//Point corner2 = new Point(4,1);
+		//assert(breakout.checkIntersection(OldCenter, NewCenter, corner1, corner2)==true);
+		
+	}
 
 }
