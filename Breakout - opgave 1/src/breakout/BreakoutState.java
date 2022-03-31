@@ -185,6 +185,63 @@ public class BreakoutState {
 						&& topLeftX < blocks[j].getBottomRight().getX()
 						&& topLeftY < blocks[j].getBottomRight().getY()){
 					
+					// check left wall of block
+					if (balls[i].getVelocity().product(Vector.RIGHT) > 0){
+						BallState newBallState = new BallState(
+								balls[i].getCenter(),
+	                			balls[i].getDiameter(), 
+	                			balls[i].getVelocity().mirrorOver(Vector.LEFT));
+	    				newCrashBalls[i] = newBallState;
+					}
+					
+					// check top wall
+					else if (balls[i].getVelocity().product(Vector.DOWN) > 0){
+							BallState newBallState = new BallState(
+									balls[i].getCenter(),
+		                			balls[i].getDiameter(), 
+		                			balls[i].getVelocity().mirrorOver(Vector.UP));
+		    				newCrashBalls[i] = newBallState;
+						}
+					
+					// check right wall
+					else if (balls[i].getVelocity().product(Vector.RIGHT) > 0){
+							BallState newBallState = new BallState(
+									balls[i].getCenter(),
+		                			balls[i].getDiameter(), 
+		                			balls[i].getVelocity().mirrorOver(Vector.LEFT));
+		    				newCrashBalls[i] = newBallState;
+						}
+					
+					// check bottom wall
+					else if (balls[i].getVelocity().product(Vector.UP) > 0){
+							BallState newBallState = new BallState(
+									balls[i].getCenter(),
+		                			balls[i].getDiameter(), 
+		                			balls[i].getVelocity().mirrorOver(Vector.DOWN));
+		    				newCrashBalls[i] = newBallState;
+						}
+					
+					
+					else {
+						blocksNotHit.add(blocks[i]);
+						BallState newBallState = new BallState(balls[i].getCenter(),
+	                			balls[i].getDiameter(), 
+	                			balls[i].getVelocity());
+	    				newCrashBalls[i] = newBallState;
+					}		
+				}
+				else {
+					blocksNotHit.add(blocks[i]);
+					BallState newBallState = new BallState(balls[i].getCenter(),
+                			balls[i].getDiameter(), 
+                			balls[i].getVelocity());
+    				newCrashBalls[i] = newBallState;
+				}
+					
+			}
+					
+					
+/*					
 					if (balls[i].getVelocity().getX() > 0){
 	                    if (checkIntersection(newCenterX, newCenterY, oldCenterX, oldCenterY,
 	                    		blocks[j].getTopLeft().getX(), blocks[j].getBottomRight().getY(),
@@ -252,15 +309,10 @@ public class BreakoutState {
 	                        }
 	                    }
 	                }
-				}
-				else {
-					blocksNotHit.add(blocks[i]);
-					BallState newBallState = new BallState(balls[i].getCenter(),
-                			balls[i].getDiameter(), 
-                			balls[i].getVelocity());
-    				newCrashBalls[i] = newBallState;
-				}
-			}
+				}*/
+				
+			//}
+		//}
 		}
 		BlockState[] newBlocks = new BlockState[blocksNotHit.size()];
 		newBlocks = blocksNotHit.toArray(newBlocks);
@@ -270,9 +322,8 @@ public class BreakoutState {
 
 		
 		
-}
 		
-		
+	}
 	
 	/**
 	 * This method moves the paddle 10 steps to the right.
