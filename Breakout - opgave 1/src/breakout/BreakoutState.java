@@ -90,6 +90,29 @@ public class BreakoutState {
 		return bottomRight;
 	}
 	
+
+	//TODO: document this
+	//TODO: write tests
+	/**
+	 * This method checks if two objects intersect.
+	 * 
+	 * @mutates | this
+	 */
+	private boolean checkIntersection(Point old_center, Point new_center, Point corner1, Point corner2) {
+		// angle between position 1 and 2 of the ball
+        double old_new = Math.atan2(-new_center.getY() + old_center.getY(), new_center.getX() - old_center.getX());
+        // angle between position 1 and one corner
+        double old_corner1 = Math.atan2(-corner1.getY() + old_center.getY(), corner1.getX() - old_center.getX());
+        // angle between position 1 and the second corner
+        double old_corner2 = Math.atan2(-corner2.getY() + old_center.getY(), corner2.getX() - old_center.getX());
+        // and if angle from position 1 to position 2 is between angle from one corner to the other corner...
+        if (old_new > old_corner1 && old_new < old_corner2){
+            return true;
+        } else {
+            return false;
+        }
+	}
+	
 	/**
 	 * This method performs movement of a ball, including checks of whether the ball hits any other elements.
 	 * 
