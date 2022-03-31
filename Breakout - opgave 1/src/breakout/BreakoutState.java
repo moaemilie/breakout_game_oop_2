@@ -181,10 +181,10 @@ public class BreakoutState {
 	        
 			for (int j=0; j < blocks.length; j++) {
 				
-				if (topLeftX + width > blocks[j].getTopLeft().getX() 
-						&& topLeftY + height > blocks[j].getTopLeft().getY() 
-						&& topLeftX < blocks[j].getBottomRight().getX()
-						&& topLeftY < blocks[j].getBottomRight().getY()){
+				if(blocks[j].getTopLeft().getX() < (balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) &&
+						(balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) < blocks[j].getBottomRight().getX() &&
+						blocks[j].getBottomRight().getY() > (balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) &&
+						(balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) > blocks[j].getTopLeft().getY()){
 					
 					// check left wall of block
 					if (balls[i].getVelocity().product(Vector.RIGHT) > 0){
@@ -249,19 +249,21 @@ public class BreakoutState {
 		// Check if ball hits paddle, and bounce and speed it up if it does
 		
 		//TODO: implement
+		//TODO: Make test run 
 		//TODO: test
 		BallState[] newPaddleBalls = new BallState[balls.length];
 		
 		for (int i = 0; i < balls.length; i++) {	
-			if(balls[i].getCenter().getX() - (balls[i].getDiameter()/2) <= paddle.getBottomRight().getX() 
-					&& balls[i].getCenter().getX() + (balls[i].getDiameter()/2) >= paddle.getTopLeft().getX() 
-					&& balls[i].getCenter().getY() + (balls[i].getDiameter()/2) >= paddle.getTopLeft().getY()) {
+			if((balls[i].getVelocity().getX() > paddle.getTopLeft().getX() && balls[i].getVelocity().getX() < paddle.getBottomRight().getX()) &&
+					(balls[i].getVelocity().getY() > paddle.getBottomRight().getY() && balls[i].getVelocity().getY() < paddle.getTopLeft().getY())) {
+				
+				
 				Vector newVelocity = balls[i].getVelocity().mirrorOver(Vector.DOWN).plus(new Vector(1/5 * paddleDir, 0));
 				BallState newBallState = new BallState(balls[i].getCenter(), balls[i].getDiameter(), newVelocity);
 				newPaddleBalls[i] = newBallState;
 			}
 			else {
-				newPaddleBalls[i] = new BallState(balls[i].getCenter(), balls[i].getDiameter(), balls[i].getVelocity());
+				newPaddleBalls[i] = balls[i];
 			}
 		}
 		balls = newPaddleBalls;
