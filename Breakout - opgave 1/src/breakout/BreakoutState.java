@@ -165,17 +165,21 @@ public class BreakoutState {
 		
 		// Check if the ball hits a block and removes the block and bounces the ball
 		ArrayList<BlockState> blocksNotHit = new ArrayList<BlockState>();
+		BallState[] newCrashBalls = new BallState[balls.length];
+		
 		for (int i = 0 ;i < balls.length; i++) {
-			int currentCenterX = balls[i].getCenter().getX();
-			int currentCenterY = balls[i].getCenter().getY();
+			
+			int newCenterX = balls[i].getCenter().getX();
+			int newCenterY = balls[i].getCenter().getY();
 			int oldCenterX = balls[i].getCenter().getX() - balls[i].getVelocity().getX();
 			int oldCenterY = balls[i].getCenter().getY() - balls[i].getVelocity().getY();
-			int topLeftX = Math.min(oldCenterX, currentCenterX);
-			int topLeftY = Math.min(oldCenterY, currentCenterY);
+			int topLeftX = Math.min(oldCenterX, newCenterX);
+			int topLeftY = Math.min(oldCenterY, newCenterY);
 			int width = Math.abs(balls[i].getVelocity().getX());
 	        int height = Math.abs(balls[i].getVelocity().getY());
 	        
-			for (int j =0; j < blocks.length; j++) {
+			for (int j=0; j < blocks.length; j++) {
+				
 				if (topLeftX + width > blocks[j].getTopLeft().getX() 
 						&& topLeftY + height > blocks[j].getTopLeft().getY() 
 						&& topLeftX < blocks[j].getBottomRight().getX()
@@ -185,8 +189,6 @@ public class BreakoutState {
 				//		blocks[j].getBottomRight().getY() > (balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) &&
 				//		(balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) > blocks[j].getTopLeft().getY()){
 					
-					BallState newBallState = new BallState(newBalls[i].getCenter(),newBalls[i].getDiameter(), newBalls[i].getVelocity().mirrorOver(Vector.UP));
-					newBalls[i] = newBallState;
 					
 					//if(balls[i].getVelocity().product(Vector.UP) > 0 && balls[i].getVelocity().product(Vector.LEFT) > 0) {
 						
@@ -196,58 +198,89 @@ public class BreakoutState {
 					//}}
 					
 					if (balls[i].getVelocity().getX() > 0){
-	                    if (checkIntersection(newCenterX,p2,b._p1,b._p4)){
+	                    if (checkIntersection(newCenterX, newCenterY, oldCenterX, oldCenterY,
+	                    		blocks[j].getTopLeft().getX(), blocks[j].getBottomRight().getY(),
+	                    		blocks[j].getTopLeft().getX(), blocks[j].getTopLeft().getY()){
 	                        // ball hits left wall of brick
-	                        //drawLine(lines,b._p1,b._p4,0x00ffee);
-	                        // instead of drawLine above, put in your function for collision of left wall
-	                        arr.push(b._p1,b._p4);
-	                        arrLines.push({p1:b._p1,p2:b._p4,brick:brickArray[i]});
-	                        // that last array there simply holds an object with 3 properties 
-	                        // for use later in comparing what should actually receive the hit.
-	                    }
-	                    if (yDir > 0) {
-	                        if (checkIntersection(p2,p1,b._p1,b._p2)){
+	                    	BallState newBallState = new BallState(balls[i].getCenter(),
+	                    			balls[i].getDiameter(), 
+	                    			balls[i].getVelocity().mirrorOver(Vector.RIGHT));
+	        				newCrashBalls[i] = newBallState;
+	        				}
+		
+	                    if (balls[i].getVelocity().getY() > 0) {
+	                        if (checkIntersection(newCenterX, newCenterY, oldCenterX, oldCenterY,
+		                    		blocks[j].getTopLeft().getX(), blocks[j].getTopLeft().getY(),
+		                    		blocks[j].getBottomRight().getX(), blocks[j].getTopLeft().getY())){
 	                            // ball hits top wall of brick
-	                            arr.push(b._p1,b._p2);
-	                            arrLines.push({p1:b._p1,p2:b._p2,brick:brickArray[i]});
+	                        	BallState newBallState = new BallState(balls[i].getCenter(),
+		                    			balls[i].getDiameter(), 
+		                    			balls[i].getVelocity().mirrorOver(Vector.DOWN));
+		        				newCrashBalls[i] = newBallState;
+	                            
 	                        }
-	                    } else if (yDir < 0){
-	                        if(checkIntersection(p2,p1,b._p3,b._p4)){
+	                    } 
+	                    else if (balls[i].getVelocity().getY() < 0){
+	                        if(checkIntersection(newCenterX, newCenterY, oldCenterX, oldCenterY,
+	                        		blocks[j].getBottomRight().getX(), blocks[j].getBottomRight().getY(),
+		                    		blocks[j].getTopLeft().getX(), blocks[j].getBottomRight().getY())){
 	                            // ball hits bottom wall of brick
-	                            arr.push(b._p3,b._p4);  
-	                            arrLines.push({p1:b._p3,p2:b._p4,brick:brickArray[i]});                                
+	                        	BallState newBallState = new BallState(balls[i].getCenter(),
+		                    			balls[i].getDiameter(), 
+		                    			balls[i].getVelocity().mirrorOver(Vector.UP));
+		        				newCrashBalls[i] = newBallState;                                
 	                        }
 	                    }
-	                } else if (xDir < 0){
-	                    if(checkIntersection(p2,p1,b._p2,b._p3)){
-	                        // ball hits right edge of brick
-	                        arr.push(b._p2,b._p3);
-	                        arrLines.push({p1:b._p2,p2:b._p3,brick:brickArray[i]});
+	                } 
+					else if (balls[i].getVelocity().getX() < 0){
+	                    if(checkIntersection(newCenterX, newCenterY, oldCenterX, oldCenterY,
+	                    		blocks[j].getBottomRight().getX(), blocks[j].getTopLeft().getY(),
+	                    		blocks[j].getBottomRight().getX(), blocks[j].getBottomRight().getY()){
+	                        // ball hits left wall of brick
+	                    	BallState newBallState = new BallState(balls[i].getCenter(),
+	                    			balls[i].getDiameter(), 
+	                    			balls[i].getVelocity().mirrorOver(Vector.LEFT));
+	        				newCrashBalls[i] = newBallState;
 	                    } 
-	                    if (yDir > 0) {
-	                        if (checkIntersection(p2,p1,b._p1,b._p2)){
-	                            // ball hits top edge of brick
-	                            arr.push(b._p1,b._p2);
-	                            arrLines.push({p1:b._p1,p2:b._p2,brick:brickArray[i]});
+	                    if (balls[i].getVelocity().getY() > 0) {
+	                        if (checkIntersection(newCenterX, newCenterY, oldCenterX, oldCenterY,
+		                    		blocks[j].getTopLeft().getX(), blocks[j].getTopLeft().getY(),
+		                    		blocks[j].getBottomRight().getX(), blocks[j].getTopLeft().getY())){
+	                            // ball hits top wall of brick
+	                        	BallState newBallState = new BallState(balls[i].getCenter(),
+		                    			balls[i].getDiameter(), 
+		                    			balls[i].getVelocity().mirrorOver(Vector.DOWN));
+		        				newCrashBalls[i] = newBallState;
 	                        }
-	                    } else if (yDir < 0){
-	                        if(checkIntersection(p2,p1,b._p3,b._p4)){
-	                            // ball hits bottom edge of brick
-	                            arr.push(b._p3,b._p4);
-	                            arrLines.push({p1:b._p3,p2:b._p4,brick:brickArray[i]}); 
+	                    } 
+	                    else if (balls[i].getVelocity().getY() < 0){
+	                        if(checkIntersection(newCenterX, newCenterY, oldCenterX, oldCenterY,
+	                        		blocks[j].getBottomRight().getX(), blocks[j].getBottomRight().getY(),
+		                    		blocks[j].getTopLeft().getX(), blocks[j].getBottomRight().getY())){
+	                            // ball hits bottom wall of brick
+	                        	BallState newBallState = new BallState(balls[i].getCenter(),
+		                    			balls[i].getDiameter(), 
+		                    			balls[i].getVelocity().mirrorOver(Vector.UP));
+		        				newCrashBalls[i] = newBallState; 
 	                        }
 	                    }
 	                }
 				}
 				else {
 					blocksNotHit.add(blocks[i]);
+					BallState newBallState = new BallState(balls[i].getCenter(),
+                			balls[i].getDiameter(), 
+                			balls[i].getVelocity());
+    				newCrashBalls[i] = newBallState;
 					
 				}
 			}
 		}
-		//BlockState[] Newblocks = new BlockState[blocksNotHit.size()];
-		//Newblocks = blocksNotHit.toArray(Newblocks);
-		//blocks = Newblocks;
+		BlockState[] newBlocks = new BlockState[blocksNotHit.size()];
+		newBlocks = blocksNotHit.toArray(newBlocks);
+		blocks = newBlocks;
+		
+		balls = newCrashBalls;
 
 		
 		
