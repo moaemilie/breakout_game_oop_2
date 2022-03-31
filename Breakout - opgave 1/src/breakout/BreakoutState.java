@@ -98,13 +98,14 @@ public class BreakoutState {
 	 * 
 	 * @mutates | this
 	 */
-	private boolean checkIntersection(Point old_center, Point new_center, Point corner1, Point corner2) {
+	private boolean checkIntersection(int newCenterX, int newCenterY, int oldCenterX, int oldCenterY,
+    		int corner1X, int corner1Y, int corner2X, int corner2Y) {
 		// angle between position 1 and 2 of the ball
-        double old_new = Math.atan2(-new_center.getY() + old_center.getY(), new_center.getX() - old_center.getX());
+        double old_new = Math.atan2(-newCenterY + oldCenterY, newCenterX - oldCenterX);
         // angle between position 1 and one corner
-        double old_corner1 = Math.atan2(-corner1.getY() + old_center.getY(), corner1.getX() - old_center.getX());
+        double old_corner1 = Math.atan2(-corner1Y + oldCenterY, corner1X - oldCenterX);
         // angle between position 1 and the second corner
-        double old_corner2 = Math.atan2(-corner2.getY() + old_center.getY(), corner2.getX() - old_center.getX());
+        double old_corner2 = Math.atan2(-corner2Y + oldCenterY, corner2X - oldCenterX);
         // and if angle from position 1 to position 2 is between angle from one corner to the other corner...
         if (old_new > old_corner1 && old_new < old_corner2){
             return true;
