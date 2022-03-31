@@ -29,7 +29,7 @@ class BreakoutStateTest {
 		assertEquals(breakout.getPaddle(), paddle);
 		assertEquals(breakout.getBottomRight(), BRMap);
 		
-		// Test that the velocity is updated afther the tick method
+		// Test that the velocity is updated after the tick method
 		BallState[] newBalls = {new BallState(new Point(4,4), diameter, speed)};
 		breakout.tick(2);
 		assert breakout.getBalls()[0].getCenter().equals(newBalls[0].getCenter());
@@ -104,7 +104,7 @@ class BreakoutStateTest {
 		breakoutDead.tick(1);
 		assert(breakoutDead.isDead() == true);
 		
-		// Cheks that the game is not lost
+		// Checks that the game is not lost
 		BallState[] ballsNotDead = {new BallState(center, diameter, speed)};
 		BreakoutState breakoutNotDead = new BreakoutState(ballsNotDead, blocks, BRMap, paddle);
 		breakoutNotDead.tick(1);
@@ -174,6 +174,26 @@ class BreakoutStateTest {
 		assertEquals(breakout_B.getBalls()[0].getVelocity().getX(), velocityB.mirrorOver(Vector.UP).getX()); // Blir (-1,-3)
 		assertEquals(breakout_B.getBalls()[0].getVelocity().getY(), velocityB.mirrorOver(Vector.UP).getY());
 		assert(breakout_B.getBlocks().length == 0);
+		
+		//Checks if ball hits paddle and if ball has sped up
+		Point centerP = new Point(5, 8);
+		Vector velocityP = new Vector(0,1); 
+		Point paddlecenter_P = new Point(5,10);
+		Vector paddlesize_P = new Vector(3,1);
+		PaddleState paddle_P = new PaddleState(paddlecenter_P, paddlesize_P);
+		BallState[] balls_P = {new BallState(centerP, diameterB, velocityP)};
+		BlockState[] blocks_P = {new BlockState(TL_B, BR_B)}; 
+		BreakoutState breakout_P = new BreakoutState(balls_P, blocks_P, BRMap_B, paddle_P);
+		
+		breakout_P.tick(2);
+		
+		//assert(breakout_P.getBalls()[0].getVelocity().getX() < velocityP.getX());
+		assertEquals(breakout_P.getBalls()[0].getVelocity().getX(), velocityP.getX());
+		assertEquals(breakout_P.getBalls()[0].getVelocity().getY(), velocityP.getY());
+		
+		breakout_P.tick(2);
+		//assertEquals(breakout_P.getBalls()[0].getVelocity().getX(), velocityP.getX());
+		//assertEquals(breakout_P.getBalls()[0].getVelocity().getY(), velocityP.getY());
 		
 	}
 	
