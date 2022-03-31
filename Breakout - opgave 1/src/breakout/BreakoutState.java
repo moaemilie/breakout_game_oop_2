@@ -261,7 +261,7 @@ public class BreakoutState {
 				newPaddleBalls[i] = newBallState;
 			}
 			else {
-				newPaddleBalls[i] = balls[i];
+				newPaddleBalls[i] = new BallState(balls[i].getCenter(), balls[i].getDiameter(), balls[i].getVelocity());
 			}
 		}
 		balls = newPaddleBalls;
