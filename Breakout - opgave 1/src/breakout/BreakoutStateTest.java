@@ -74,7 +74,7 @@ class BreakoutStateTest {
 		assertEquals(breakoutT.getBalls()[0].getVelocity().getY(), speedT.mirrorOver(Vector.UP).getY());
 		
 		
-		// Test hits the botom of the feild
+		// Test hits the bottom of the field
 		Point BallDown = new Point(8,8);
 		Vector speedDown = new Vector(0, 4);
 		
@@ -110,6 +110,68 @@ class BreakoutStateTest {
 		BreakoutState breakoutNotDead = new BreakoutState(ballsNotDead, blocks, BRMap, paddle);
 		breakoutNotDead.tick(1);
 		assert(breakoutNotDead.isDead() == false);
+		
+		// Define objects for hitting blocks
+		int diameterB = 2;
+		Point TL_B = new Point(4,3);
+		Point BR_B = new Point(7,6);
+		Point BRMap_B = new Point(10,10);
+		Point paddlecenter_B = new Point(5,10);
+		Vector paddlesize_B = new Vector(1,1);
+		PaddleState paddle_B = new PaddleState(paddlecenter_B, paddlesize_B);
+		
+		// Checks if ball is mirrored and block removed if ball hits left wall
+		Point centerL = new Point(2, 5);
+		Vector velocityL = new Vector(3,-1);
+		BallState[] balls_L = {new BallState(centerL, diameterB, velocityL)};
+		BlockState[] blocks_L = {new BlockState(TL_B, BR_B)}; 
+		BreakoutState breakout_L = new BreakoutState(balls_L, blocks_L, BRMap_B, paddle_B);
+		
+		breakout_L.tick(2);
+		
+		assert(breakout_L.getBalls().length != 0);
+		assertEquals(breakout_L.getBalls()[0].getVelocity().getX(), velocityL.mirrorOver(Vector.RIGHT).getX());
+		assert(breakout_L.getBlocks().length == 0);
+		
+		// Checks if ball is mirrored and block removed if ball hits top wall
+		Point centerT = new Point(6, 1);
+		Vector velocityT = new Vector(0,3); 
+		BallState[] balls_T = {new BallState(centerT, diameterB, velocityT)};
+		BlockState[] blocks_T = {new BlockState(TL_B, BR_B)}; 
+		BreakoutState breakout_T = new BreakoutState(balls_T, blocks_T, BRMap_B, paddle_B);
+		
+		breakout_T.tick(2);
+		
+		assert(breakout_T.getBalls().length != 0);
+		//assertEquals(breakout_T.getBalls()[0].getVelocity().getX(), velocityT.mirrorOver(Vector.DOWN).getX());
+		assert(breakout_T.getBlocks().length == 0);
+
+		// Checks if ball is mirrored and block removed if ball hits right wall of block
+		Point centerR = new Point(9, 5);
+		Vector velocityR = new Vector(-3,-1); 
+		BallState[] balls_R = {new BallState(centerR, diameterB, velocityR)};
+		BlockState[] blocks_R = {new BlockState(TL_B, BR_B)}; 
+		BreakoutState breakout_R = new BreakoutState(balls_R, blocks_R, BRMap_B, paddle_B);
+		
+		breakout_R.tick(2);
+		
+		assert(breakout_R.getBalls().length != 0);
+		//assertEquals(breakout_R.getBalls()[0].getVelocity().getX(), velocityR.mirrorOver(Vector.LEFT).getX());
+		assert(breakout_R.getBlocks().length == 0);
+		
+		// Checks if ball is mirrored and block removed if ball hits bottom wall of block
+		Point centerB = new Point(5, 7);
+		Vector velocityB = new Vector(0,-3); 
+		BallState[] balls_B = {new BallState(centerB, diameterB, velocityB)};
+		BlockState[] blocks_B = {new BlockState(TL_B, BR_B)}; 
+		BreakoutState breakout_B = new BreakoutState(balls_B, blocks_B, BRMap_B, paddle_B);
+		
+		breakout_B.tick(2);
+		
+		assert(breakout_B.getBalls().length != 0);
+		//assertEquals(breakout_B.getBalls()[0].getVelocity().getX(), velocityB.mirrorOver(Vector.UP).getX());
+		assert(breakout_B.getBlocks().length == 0);
+		
 	}
 	
 	@Test
