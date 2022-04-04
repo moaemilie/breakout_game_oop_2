@@ -98,21 +98,113 @@ public class BreakoutState {
 	 * 
 	 * @mutates | this
 	 */
-	private boolean checkIntersection(int newCenterX, int newCenterY, int oldCenterX, int oldCenterY,
-    		int corner1X, int corner1Y, int corner2X, int corner2Y) {
-		// angle between position 1 and 2 of the ball
-        double old_new = Math.atan2(-newCenterY + oldCenterY, newCenterX - oldCenterX);
-        // angle between position 1 and one corner
-        double old_corner1 = Math.atan2(-corner1Y + oldCenterY, corner1X - oldCenterX);
-        // angle between position 1 and the second corner
-        double old_corner2 = Math.atan2(-corner2Y + oldCenterY, corner2X - oldCenterX);
-        // and if angle from position 1 to position 2 is between angle from one corner to the other corner...
-        if (old_new > old_corner1 && old_new < old_corner2){
-            return true;
-        } else {
-            return false;
-        }
+public int Intersect(BallState ball, BlockState block) {
+		
+		int x_first = ball.getCenter().getX() - ball.getVelocity().getX();
+		int y_first = ball.getCenter().getY() - ball.getVelocity().getY();
+		int x_afther = ball.getCenter().getX();
+		int y_afther =  ball.getCenter().getY();
+		int velocityX = ball.getVelocity().getX();
+		int velocityY = ball.getVelocity().getY();
+		int topLeft_x = block.getTopLeft().getX();
+		int topLeft_y = block.getTopLeft().getY();
+		int BottomRight_x = block.getBottomRight().getX();
+		int BottomRight_y = block.getBottomRight().getY();
+		int a;
+		
+		if (y_afther == y_first || x_afther == x_first) {
+			a = 0;
+			
+			if(velocityX == 0 && velocityY != 0) {
+				if(velocityY < 0) {
+					return x_afther; // It has hit the bottom
+				}
+				else if(velocityY > 0) {
+					return x_afther; // It has hit the top
+				}
+			}
+			
+			else {
+				if(velocityX < 0){
+					return y_afther; // It has hit the right wall
+				}
+				else if(velocityX > 0) {
+					return y_afther; // It has hit the left wall
+				}
+			}
+		}
+		
+		else {
+			a = (x_afther - x_first)/(y_afther - y_first);
+			
+			if(a == 0 && velocityX != 0 && velocityY != 0) {
+
+					if(velocityY > 0) {
+						return topLeft_y; // It has hit the top
+					}
+					if(velocityY < 0) {
+						return BottomRight_y; // It has hit the bottom
+					}
+			}
+		}
+		
+		int b = y_afther - a * x_afther;
+		
+		
+		if(velocityX > 0 && velocityY != 0) {
+			if(velocityY > 0) {
+				int cross_top_x = (topLeft_y - b)/a;
+				int cross_left_y = a*topLeft_x + b;
+				
+				if(topLeft_x < cross_top_x && cross_top_x < BottomRight_x) {
+					return cross_top_x; // It has then hit the top
+					}
+				else {
+					return cross_left_y; // It had hit the left wall	
+				}
+			}
+			else if(velocityY < 0) {
+				int cross_left_y = a*topLeft_x + b;
+				int cross_bottom_x = (BottomRight_y - b)/a;
+				
+				if(topLeft_x < cross_bottom_x && cross_bottom_x < BottomRight_x) {
+					return cross_bottom_x; // It has then hit the bottom
+					}
+				else {
+					return cross_left_y; // It had hit the left wall	
+				}
+			}
+
+			}
+		else if(velocityX < 0 && velocityY != 0){
+			
+			if(velocityY > 0) {
+				int cross_top_x = (topLeft_y - b)/a;
+				int cross_right_y = a*BottomRight_x + b;
+				
+				if(topLeft_x < cross_top_x && cross_top_x < BottomRight_x) {
+					return cross_top_x; // It has then hit the top
+					}
+				else {
+					return cross_right_y; // It had hit the right wall	
+				}
+			}
+			else if(velocityY < 0) {
+				int cross_right_y = a*BottomRight_x + b;
+				int cross_bottom_x = (BottomRight_y - b)/a;
+				
+				if(topLeft_x < cross_bottom_x && cross_bottom_x < BottomRight_x) {
+					return cross_bottom_x; // It has then hit the bottom
+					}
+				else {
+					return cross_right_y; // It had hit the right wall	
+				}
+			}
+			}
+		
+		return(0);
 	}
+
 	
 	//TODO: less ambigous check of block
 	//TODO: check paddle
