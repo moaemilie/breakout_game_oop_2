@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import newTest.Intersect;
+
 class BreakoutStateTest {
 
 	@Test
@@ -195,30 +197,77 @@ class BreakoutStateTest {
 		//assertEquals(breakout_P.getBalls()[0].getVelocity().getX(), velocityP.getX());
 		//assertEquals(breakout_P.getBalls()[0].getVelocity().getY(), velocityP.getY());
 		
+		
+		// Test the intersection method
+		int x_first = 3;
+		int y_first = 1;
+		int x_afther = 5;
+		int y_afther = 3; 
+		int velocityX = 2;
+		int velocityY = 2;
+		int topLeft_x = 2;
+		int topLeft_y = 2;
+		int BottomRight_x = 6;
+		int BottomRight_y = 6;
+		
+		Intersect interTop = new Intersect(x_first, y_first, x_afther, y_afther, velocityX, velocityY, topLeft_x, topLeft_y, BottomRight_x, BottomRight_y);
+		assertEquals(interTop.WhereIntersect(), 4);
+		
+		Intersect interLeft = new Intersect(1, 3, 4, 5, 2, 3, 2, 2, 6, 6);
+		assertEquals(interLeft.WhereIntersect(), 3);
+		
+
+		Intersect interRight = new Intersect(7, 5, 5, 3, -2, -2, 2, 2, 6, 6);
+		assertEquals(interRight.WhereIntersect(), 4);
+		
+		Intersect interBottomRight = new Intersect(6, 8, 4, 4, -2, -4, 2, 2, 6, 7);
+		assertEquals(interBottomRight.GetA(), 0);
+		assertEquals(interBottomRight.WhereIntersect(), 7);
+		
+		Intersect interPlusMinus = new Intersect(7, 6, 5, 3, 1, -1, 2, 2, 6, 6);
+		assertEquals(interPlusMinus.GetA(), 0);
+		assertEquals(interPlusMinus.WhereIntersect(), 6);
+		
+		Intersect interVertRight = new Intersect(4, 1, 4, 4, 0, 4, 2, 2, 6, 6);
+		assertEquals(interVertRight.WhereIntersect(), 4);
+		
+		Intersect interHorDown = new Intersect(9, 4, 5, 4, -4, 0, 2, 2, 6, 6);
+		assertEquals(interHorDown.WhereIntersect(), 4);
+		
+		
+		
+		Intersect interHorUp = new Intersect(4, 7, 4, 5, 0, -2, 2, 2, 6, 6);
+		assertEquals(interHorUp.WhereIntersect(), 4);
+		
+		Intersect interVertLeft = new Intersect(1, 4, 4, 4, 3, 0, 2, 2, 6, 6);
+		assertEquals(interVertLeft.WhereIntersect(), 4);
+		
+		Intersect interBottomLeft = new Intersect(2, 8, 5, 5, 3, -3, 2, 2, 6, 6);
+		assertEquals(interBottomLeft.GetA(), -1);
+		assertEquals(interBottomLeft.WhereIntersect(), 4);
+		
+		Intersect interTopRound = new Intersect(3, 0, 4, 4, 1, 4, 2, 2, 6, 6);
+		assertEquals(interTopRound.WhereIntersect(), 2);
+		
+		
+		
+		Intersect interTopRight = new Intersect(6, 1, 4, 3, -2, 2, 2, 2, 6, 6);
+		assertEquals(interTopRight.WhereIntersect(), 5);
+		
+		Intersect interRightLeft = new Intersect(7, 3, 5, 5, -2, 2, 2, 2, 6, 6);
+		assertEquals(interRightLeft.WhereIntersect(), 4);
+		
+		Intersect interBottomLeftNeg = new Intersect(5, 7, 3, 5, -2, -2, 2, 2, 6, 6);
+		assertEquals(interBottomLeftNeg.WhereIntersect(), 4);
+		
+		Intersect interLeftRight = new Intersect(1, 5, 3, 3, 2, -2, 2, 2, 6, 6);
+		assertEquals(interLeftRight.WhereIntersect(), 4);
+		
+		Intersect interWrong = new Intersect(1, 5, 3, 3, 0, 0, 2, 2, 6, 6);
+		assertEquals(interWrong.WhereIntersect(), 0);
+		
 	}
 	
-	@Test
-	void checkIntersectionTest() {
-		int diameter = 2;
-		Point center = new Point(1,1);
-		Vector speed = new Vector(3,3); 
-		Point TL = new Point(8,0);
-		Point BR = new Point(10,1);
-		Point BRMap = new Point(10,10);
-		Point paddlecenter = new Point(5,9);
-		Vector paddlesize = new Vector(1,1);
-		
-		BallState[] balls = {new BallState(center, diameter, speed)};
-		BlockState[] blocks = {new BlockState(TL, BR)}; 
-		PaddleState paddle = new PaddleState(paddlecenter, paddlesize);
-		BreakoutState breakout = new BreakoutState(balls, blocks, BRMap, paddle);
-		
-		//Point OldCenter = new Point(7,3);
-		//Point NewCenter = new Point(8,2);
-		//Point corner1 = new Point(4,8);
-		//Point corner2 = new Point(4,1);
-		//assert(breakout.checkIntersection(OldCenter, NewCenter, corner1, corner2)==true);
-		
-	}
+
 
 }
