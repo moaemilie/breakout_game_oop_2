@@ -100,7 +100,6 @@ public class BreakoutState {
 	 */
 public BallState Intersect(BallState ball, BlockState block) {
 	
-		BallState ballAftherHit;
 		Vector normal = new Vector(0,0);
 		Point centerAftherHit = new Point(ball.getCenter().getX(), ball.getCenter().getY());
 		
@@ -219,8 +218,8 @@ public BallState Intersect(BallState ball, BlockState block) {
 				}
 			}
 			}
-		
-		return ballAftherHit = new BallState(centerAftherHit, ball.getDiameter(), ball.getVelocity().mirrorOver(normal));
+		BallState ballAftherHit = new BallState(centerAftherHit, ball.getDiameter(), ball.getVelocity().mirrorOver(normal));
+		return ballAftherHit;
 	}
 
 	
@@ -279,16 +278,7 @@ public BallState Intersect(BallState ball, BlockState block) {
 		BallState[] newCrashBalls = new BallState[balls.length];
 		
 		for (int i = 0; i < balls.length; i++) {
-			
-			int newCenterX = balls[i].getCenter().getX();
-			int newCenterY = balls[i].getCenter().getY();
-			int oldCenterX = balls[i].getCenter().getX() - balls[i].getVelocity().getX();
-			int oldCenterY = balls[i].getCenter().getY() - balls[i].getVelocity().getY();
-			int topLeftX = Math.min(oldCenterX, newCenterX);
-			int topLeftY = Math.min(oldCenterY, newCenterY);
-			int width = Math.abs(balls[i].getVelocity().getX());
-	        int height = Math.abs(balls[i].getVelocity().getY());
-	        
+				        
 			for (int j=0; j < blocks.length; j++) {
 				
 				if(blocks[j].getTopLeft().getX() < (balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) &&
@@ -296,72 +286,30 @@ public BallState Intersect(BallState ball, BlockState block) {
 						blocks[j].getBottomRight().getY() > (balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) &&
 						(balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) > blocks[j].getTopLeft().getY()){
 					
-					// check left wall of block
-					if (balls[i].getVelocity().product(Vector.RIGHT) > 0){
-						BallState newBallState = new BallState(
-								balls[i].getCenter(),
-	                			balls[i].getDiameter(), 
-	                			balls[i].getVelocity().mirrorOver(Vector.RIGHT));
-	    				newCrashBalls[i] = newBallState;
-					}
-					
-					// check top wall
-					else if (balls[i].getVelocity().product(Vector.DOWN) > 0){
-							BallState newBallState = new BallState(
-									balls[i].getCenter(),
-		                			balls[i].getDiameter(), 
-		                			balls[i].getVelocity().mirrorOver(Vector.DOWN));
-		    				newCrashBalls[i] = newBallState;
-						}
-					
-					// check right wall
-					else if (balls[i].getVelocity().product(Vector.LEFT) > 0){
-							BallState newBallState = new BallState(
-									balls[i].getCenter(),
-		                			balls[i].getDiameter(), 
-		                			balls[i].getVelocity().mirrorOver(Vector.LEFT));
-		    				newCrashBalls[i] = newBallState;
-						}
-					
-					// check bottom wall
-					else if (balls[i].getVelocity().product(Vector.UP) > 0){
-							BallState newBallState = new BallState(
-									balls[i].getCenter(),
-		                			balls[i].getDiameter(), 
-		                			balls[i].getVelocity().mirrorOver(Vector.UP));
-		    				newCrashBalls[i] = newBallState;
-						}
-					
-					
-					else {
-						blocksNotHit.add(blocks[i]);
-						BallState newBallState = new BallState(balls[i].getCenter(),
-	                			balls[i].getDiameter(), 
-	                			balls[i].getVelocity());
-	    				newCrashBalls[i] = newBallState;
-					}		
-				}
+					newCrashBalls[i] = Intersect(balls[i], blocks[j]);}
+
 				else {
-					blocksNotHit.add(blocks[i]);
+					blocksNotHit.add(blocks[j]);
 					BallState newBallState = new BallState(balls[i].getCenter(),
                 			balls[i].getDiameter(), 
                 			balls[i].getVelocity());
     				newCrashBalls[i] = newBallState;
 				}		
-			}
+			
 		}
 		BlockState[] newBlocks = new BlockState[blocksNotHit.size()];
 		newBlocks = blocksNotHit.toArray(newBlocks);
 		blocks = newBlocks;
 		
 		balls = newCrashBalls;
+		}
 
 		// Check if ball hits paddle, and bounce and speed it up if it does
 		
 		//TODO: implement
 		//TODO: Make test run 
 		//TODO: test
-		BallState[] newPaddleBalls = new BallState[balls.length];
+/*		BallState[] newPaddleBalls = new BallState[balls.length];
 		
 		for (int i = 0; i < balls.length; i++) {	
 			if((balls[i].getVelocity().getX() > paddle.getTopLeft().getX() && balls[i].getVelocity().getX() < paddle.getBottomRight().getX()) &&
@@ -376,7 +324,7 @@ public BallState Intersect(BallState ball, BlockState block) {
 				newPaddleBalls[i] = balls[i];
 			}
 		}
-		balls = newPaddleBalls;
+		balls = newPaddleBalls;*/
 				
 	}
 	
