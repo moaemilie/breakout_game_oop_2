@@ -98,7 +98,11 @@ public class BreakoutState {
 	 * 
 	 * @mutates | this
 	 */
-public int Intersect(BallState ball, BlockState block) {
+public BallState Intersect(BallState ball, BlockState block) {
+	
+		BallState ballAftherHit;
+		Vector normal = new Vector(0,0);
+		Point centerAftherHit = new Point(ball.getCenter().getX(), ball.getCenter().getY());
 		
 		int x_first = ball.getCenter().getX() - ball.getVelocity().getX();
 		int y_first = ball.getCenter().getY() - ball.getVelocity().getY();
@@ -117,19 +121,23 @@ public int Intersect(BallState ball, BlockState block) {
 			
 			if(velocityX == 0 && velocityY != 0) {
 				if(velocityY < 0) {
-					return x_afther; // It has hit the bottom
+					normal = Vector.UP; // It has hit the bottom
+					centerAftherHit = new Point(x_afther, BottomRight_y);
 				}
 				else if(velocityY > 0) {
-					return x_afther; // It has hit the top
+					normal = Vector.DOWN; // It has hit the top
+					centerAftherHit = new Point(x_afther, topLeft_y);
 				}
 			}
 			
 			else {
 				if(velocityX < 0){
-					return y_afther; // It has hit the right wall
+					centerAftherHit = new Point(BottomRight_x ,y_afther); // It has hit the right wall
+					normal = Vector.LEFT;
 				}
 				else if(velocityX > 0) {
-					return y_afther; // It has hit the left wall
+					centerAftherHit = new Point(topLeft_x ,y_afther); // It has hit the left wall
+					normal = Vector.RIGHT;
 				}
 			}
 		}
@@ -140,16 +148,18 @@ public int Intersect(BallState ball, BlockState block) {
 			if(a == 0 && velocityX != 0 && velocityY != 0) {
 
 					if(velocityY > 0) {
-						return topLeft_y; // It has hit the top
+						centerAftherHit = new Point(x_afther ,topLeft_y); // It has hit the top
+						normal = Vector.DOWN;
 					}
 					if(velocityY < 0) {
-						return BottomRight_y; // It has hit the bottom
+						centerAftherHit = new Point(x_afther ,BottomRight_y); // It has hit the bottom
+						normal = Vector.UP;
 					}
 			}
 		}
 		
-		int b = y_afther - a * x_afther;
 		
+		int b = y_afther - a * x_afther;
 		
 		if(velocityX > 0 && velocityY != 0) {
 			if(velocityY > 0) {
@@ -157,10 +167,12 @@ public int Intersect(BallState ball, BlockState block) {
 				int cross_left_y = a*topLeft_x + b;
 				
 				if(topLeft_x < cross_top_x && cross_top_x < BottomRight_x) {
-					return cross_top_x; // It has then hit the top
+					centerAftherHit = new Point(cross_top_x , topLeft_y); // It has then hit the top
+					normal = Vector.DOWN;
 					}
 				else {
-					return cross_left_y; // It had hit the left wall	
+					centerAftherHit = new Point(topLeft_x , cross_left_y); // It had hit the left wall	
+					normal = Vector.RIGHT;
 				}
 			}
 			else if(velocityY < 0) {
@@ -168,10 +180,12 @@ public int Intersect(BallState ball, BlockState block) {
 				int cross_bottom_x = (BottomRight_y - b)/a;
 				
 				if(topLeft_x < cross_bottom_x && cross_bottom_x < BottomRight_x) {
-					return cross_bottom_x; // It has then hit the bottom
+					centerAftherHit = new Point(cross_bottom_x , BottomRight_y); // It has then hit the bottom
+					normal = Vector.UP;
 					}
 				else {
-					return cross_left_y; // It had hit the left wall	
+					centerAftherHit = new Point(topLeft_x , cross_left_y); // It had hit the left wall
+					normal = Vector.RIGHT;
 				}
 			}
 
@@ -183,10 +197,12 @@ public int Intersect(BallState ball, BlockState block) {
 				int cross_right_y = a*BottomRight_x + b;
 				
 				if(topLeft_x < cross_top_x && cross_top_x < BottomRight_x) {
-					return cross_top_x; // It has then hit the top
+					centerAftherHit = new Point(cross_top_x , topLeft_y); // It has then hit the top
+					normal = Vector.DOWN;
 					}
 				else {
-					return cross_right_y; // It had hit the right wall	
+					centerAftherHit = new Point(BottomRight_x , cross_right_y); // It had hit the right wall
+					normal = Vector.LEFT;
 				}
 			}
 			else if(velocityY < 0) {
@@ -194,15 +210,17 @@ public int Intersect(BallState ball, BlockState block) {
 				int cross_bottom_x = (BottomRight_y - b)/a;
 				
 				if(topLeft_x < cross_bottom_x && cross_bottom_x < BottomRight_x) {
-					return cross_bottom_x; // It has then hit the bottom
+					centerAftherHit = new Point(cross_bottom_x , BottomRight_y); // It has then hit the bottom
+					normal = Vector.UP;
 					}
 				else {
-					return cross_right_y; // It had hit the right wall	
+					centerAftherHit = new Point(BottomRight_x , cross_right_y); // It had hit the right wall	
+					normal = Vector.LEFT;
 				}
 			}
 			}
 		
-		return(0);
+		return ballAftherHit = new BallState(centerAftherHit, ball.getDiameter(), ball.getVelocity().mirrorOver(normal));
 	}
 
 	
