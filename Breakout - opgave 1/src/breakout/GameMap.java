@@ -17,21 +17,17 @@ public class GameMap {
 		Vector size = new Vector(WIDTH/BLOCK_COLUMNS-70,HEIGHT/BLOCK_LINES-70);
 		Point blockTL = topLeft.plus(marginBL);
 		Point blockBR = blockTL.plus(size);
-		// TODO: return a block with given top left (`blockTL`) and bottom right (`blockBR`) Point  
 		return new BlockState(blockTL, blockBR);
 	}
 	private static PaddleState createPaddle(Point topLeft) {
 		Vector size = new Vector(WIDTH/BLOCK_COLUMNS/2,HEIGHT/BLOCK_LINES/2);
 		Point center = topLeft.plus(size);
-		// TODO: return a paddle with given center 
 		return new PaddleState(center, size);
 	}
 	private static BallState createBall(Point topLeft) {
 		Vector centerD = new Vector(WIDTH/BLOCK_COLUMNS/2,HEIGHT/BLOCK_LINES/2);
 		Point center = topLeft.plus(centerD);
 		int diameter = INIT_BALL_DIAMETER;
-		// TODO: return a ball with given `center`, `diameter` and initial velocity `INIT_BALL_VELOCITY` 
-		// TODO: test this return statement
 		return new BallState(center, diameter, INIT_BALL_VELOCITY);
 	}
 		
