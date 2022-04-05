@@ -48,6 +48,7 @@ class BreakoutStateTest {
 		
 		
 		// Test the if the ball hits the walls/top
+		
 		// Test hits the right wall
 		Point BallNR = new Point(9,1);
 		BallState[] ballsNR = {new BallState(BallNR, diameter, speed)};
@@ -86,8 +87,7 @@ class BreakoutStateTest {
 		assert(breakoutNR.getBalls().length == 1);
 		assert(breakoutDown.getBalls().length == 0);
 		
-		
-		// TODO: Rewrite these test without empty lists.
+
 		// Checks if the game is won
 		Point centerWon = new Point(5,6);
 		Vector speedWon = new Vector(0,-5); 
@@ -118,6 +118,7 @@ class BreakoutStateTest {
 		// Chechs that the you are dead if the game is not won
 		assert(breakoutNotWon.isDead() == true);
 
+		
 				
 		// Test the intersection method
 		int x_first = 3;
