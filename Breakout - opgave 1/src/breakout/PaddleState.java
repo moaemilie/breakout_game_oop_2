@@ -6,9 +6,6 @@ package breakout;
  */
 
 public class PaddleState {
-	// TODO: implement
-	// TODO: implement getCenter including documentation
-	// Contractual programming
 	
 	private final Vector size;
 	private final Point center;
