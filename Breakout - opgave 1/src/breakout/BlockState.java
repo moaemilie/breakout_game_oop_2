@@ -9,8 +9,6 @@ package breakout;
  */
 
 public class BlockState {
-	// TODO: implement
-	// Contractual programming
 	/**
 	 * @invar | top_left.isUpAndLeftFrom(bottom_right)
 	 */
