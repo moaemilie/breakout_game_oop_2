@@ -34,6 +34,8 @@ public class BreakoutState {
 	 * 
 	 * Initialize breakout game with given balls, blocks, bottom right corner and paddle.
 	 * 
+	 * @throws IllegalArgumentException | input_balls == null
+	 * @throws IllegalArgumentException | input_blocks == null
 	 * @throws IllegalArgumentException | Arrays.stream(input_balls).allMatch(e -> e!= null)
 	 * @throws IllegalArgumentException | Arrays.stream(input_blocks).allMatch(e -> e!= null)
 	 * @throws IllegalArgumentException | bottomRight == null
@@ -45,6 +47,10 @@ public class BreakoutState {
 	 * @post | getBottomRight() == bottomRight
 	 */
 	public BreakoutState(BallState[] input_balls, BlockState[] input_blocks, Point bottomRight, PaddleState paddle) {
+		if(input_balls == null) {
+			throw new IllegalArgumentException();}
+		if(input_blocks == null) {
+			throw new IllegalArgumentException();}
 		if(!Arrays.stream(input_balls).allMatch(e -> e!= null)) {
 			throw new IllegalArgumentException();}
 		if(!Arrays.stream(input_blocks).allMatch(e -> e!= null)) {
