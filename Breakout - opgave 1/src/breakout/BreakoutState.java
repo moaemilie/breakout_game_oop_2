@@ -123,6 +123,16 @@ public class BreakoutState {
 				normal = Vector.LEFT;
 			}
 		}
+		else {
+			if(y_before < block.getTopLeft().getY()) {
+				// It has hit the top
+				normal = Vector.DOWN;
+			}
+			else if(y_before > block.getBottomRight().getY()) {
+				// It has hit the bottom
+				normal = Vector.UP;
+			}
+		}
 		
 		return new BallState(ball.getCenter(), ball.getDiameter(),ball.getVelocity().mirrorOver(normal));
 	}
