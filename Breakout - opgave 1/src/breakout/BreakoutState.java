@@ -105,32 +105,32 @@ public class BreakoutState {
 		int x_before = ball.getCenter().getX() - ball.getVelocity().getX();
 		int y_before = ball.getCenter().getY() - ball.getVelocity().getY();
 		
-		if(x_before > block.getTopLeft().getX() && x_before < block.getBottomRight().getX()) {
-			if(y_before < block.getTopLeft().getY()) {
+		if(x_before >= block.getTopLeft().getX() && x_before <= block.getBottomRight().getX()) {
+			if(y_before <= block.getTopLeft().getY()) {
 				// It has hit the top
 				normal = Vector.DOWN;
 			}
-			else if(y_before > block.getBottomRight().getY()) {
+			else if(y_before >= block.getBottomRight().getY()) {
 				// It has hit the bottom
 				normal = Vector.UP;
 			}
 		}
-		else if(y_before < block.getBottomRight().getY() && y_before > block.getTopLeft().getY()) {
-			if(x_before < block.getTopLeft().getX()) {
+		else if(y_before <= block.getBottomRight().getY() && y_before >= block.getTopLeft().getY()) {
+			if(x_before <= block.getTopLeft().getX()) {
 				// it has hit the left wall	
 				normal = Vector.RIGHT;
 			}
-			else if(x_before > block.getBottomRight().getX()) {
+			else if(x_before >= block.getBottomRight().getX()) {
 				// It has hit the right wall
 				normal = Vector.LEFT;
 			}
 		}
 		else {
-			if(y_before < block.getTopLeft().getY()) {
+			if(y_before <= block.getTopLeft().getY()) {
 				// It has hit the top
 				normal = Vector.DOWN;
 			}
-			else if(y_before > block.getBottomRight().getY()) {
+			else if(y_before >= block.getBottomRight().getY()) {
 				// It has hit the bottom
 				normal = Vector.UP;
 			}
