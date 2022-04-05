@@ -119,7 +119,7 @@ class BreakoutStateTest {
 		assert(breakoutNotWon.isDead() == true);
 
 		
-				
+		// This can be erased....
 		// Test the intersection method
 		/*
 		 * int x_first = 3; int y_first = 1; int velocityX = 2; int velocityY = 2; int
