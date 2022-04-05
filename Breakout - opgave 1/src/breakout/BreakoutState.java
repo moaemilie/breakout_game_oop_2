@@ -105,8 +105,8 @@ public BallState Intersect(BallState ball, BlockState block) {
 		
 		int x_first = ball.getCenter().getX() - ball.getVelocity().getX();
 		int y_first = ball.getCenter().getY() - ball.getVelocity().getY();
-		int x_afther = ball.getCenter().getX();
-		int y_afther =  ball.getCenter().getY();
+		int x_after = ball.getCenter().getX();
+		int y_after =  ball.getCenter().getY();
 		int velocityX = ball.getVelocity().getX();
 		int velocityY = ball.getVelocity().getY();
 		int topLeft_x = block.getTopLeft().getX();
@@ -115,50 +115,50 @@ public BallState Intersect(BallState ball, BlockState block) {
 		int BottomRight_y = block.getBottomRight().getY();
 		int a;
 		
-		if (y_afther == y_first || x_afther == x_first) {
+		if (y_after == y_first || x_after == x_first) {
 			a = 0;
 			
 			if(velocityX == 0 && velocityY != 0) {
 				if(velocityY < 0) {
 					normal = Vector.UP; // It has hit the bottom
-					centerAftherHit = new Point(x_afther, BottomRight_y);
+					centerAftherHit = new Point(x_after, BottomRight_y);
 				}
 				else if(velocityY > 0) {
 					normal = Vector.DOWN; // It has hit the top
-					centerAftherHit = new Point(x_afther, topLeft_y);
+					centerAftherHit = new Point(x_after, topLeft_y);
 				}
 			}
 			
 			else {
 				if(velocityX < 0){
-					centerAftherHit = new Point(BottomRight_x ,y_afther); // It has hit the right wall
+					centerAftherHit = new Point(BottomRight_x ,y_after); // It has hit the right wall
 					normal = Vector.LEFT;
 				}
 				else if(velocityX > 0) {
-					centerAftherHit = new Point(topLeft_x ,y_afther); // It has hit the left wall
+					centerAftherHit = new Point(topLeft_x ,y_after); // It has hit the left wall
 					normal = Vector.RIGHT;
 				}
 			}
 		}
 		
 		else {
-			a = (x_afther - x_first)/(y_afther - y_first);
+			a = (x_after - x_first)/(y_after - y_first);
 			
 			if(a == 0 && velocityX != 0 && velocityY != 0) {
 
 					if(velocityY > 0) {
-						centerAftherHit = new Point(x_afther ,topLeft_y); // It has hit the top
+						centerAftherHit = new Point(x_after ,topLeft_y); // It has hit the top
 						normal = Vector.DOWN;
 					}
 					if(velocityY < 0) {
-						centerAftherHit = new Point(x_afther ,BottomRight_y); // It has hit the bottom
+						centerAftherHit = new Point(x_after ,BottomRight_y); // It has hit the bottom
 						normal = Vector.UP;
 					}
 			}
 		}
 		
 		
-		int b = y_afther - a * x_afther;
+		int b = y_after - a * x_after;
 		
 		if(velocityX > 0 && velocityY != 0) {
 			if(velocityY > 0) {
