@@ -89,29 +89,35 @@ class BreakoutStateTest {
 		
 		// TODO: Rewrite these test without empty lists.
 		// Checks if the game is won
-		BlockState[] blocksWon = {}; 
-		BreakoutState breakoutWon = new BreakoutState(balls, blocksWon, BRMap, paddle);
+		Point centerWon = new Point(5,6);
+		Vector speedWon = new Vector(0,-5); 
+		Point TLWon = new Point(2,0);
+		Point BRWon = new Point(8,4);
+		Point paddlecenterWon = new Point(9,9);
+		Vector paddlesizeWon = new Vector(1,1);
+		
+		PaddleState paddleWon = new PaddleState(paddlecenterWon, paddlesizeWon);
+		BallState[] ballsWon = {new BallState(centerWon, diameter, speedWon)};
+		BlockState[] blocksWon = {new BlockState(TLWon, BRWon)}; 
+		BreakoutState breakoutWon = new BreakoutState(ballsWon, blocksWon, BRMap, paddleWon);
 		breakoutWon.tick(0);
+		
 		assert(breakoutWon.isWon() == true);
 		
+		// Checks that the game is not lost
+		assert(breakoutWon.isDead() == false);
+		
 		// Check that the game is not won when there are no balls left.
-		BallState[] ballsNotWon = {};
-		BlockState[] blocksNotWon = {}; 
-		BreakoutState breakoutNotWon = new BreakoutState(ballsNotWon, blocksNotWon, BRMap, paddle);
+		Vector speedNotWon = new Vector(0,5); 
+		BallState[] ballsNotWon = {new BallState(centerWon, diameter, speedNotWon)};
+		
+		BreakoutState breakoutNotWon = new BreakoutState(ballsNotWon, blocksWon, BRMap, paddleWon);
 		breakoutNotWon.tick(0);
 		assert(breakoutNotWon.isWon() == false);
 		
-		// Checks if the game is lost
-		BallState[] ballsDead = {};
-		BreakoutState breakoutDead = new BreakoutState(ballsDead, blocks, BRMap, paddle);
-		breakoutDead.tick(0);
-		assert(breakoutDead.isDead() == true);
-		
-		// Checks that the game is not lost
-		BallState[] ballsNotDead = {new BallState(center, diameter, speed)};
-		BreakoutState breakoutNotDead = new BreakoutState(ballsNotDead, blocks, BRMap, paddle);
-		breakoutNotDead.tick(0);
-		assert(breakoutNotDead.isDead() == false);
+		// Chechs that the you are dead if the game is not won
+		assert(breakoutNotWon.isDead() == true);
+
 				
 		// Test the intersection method
 		int x_first = 3;
