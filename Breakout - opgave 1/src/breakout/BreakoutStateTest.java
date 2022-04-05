@@ -200,6 +200,24 @@ class BreakoutStateTest {
 		assertEquals(interHor.getBalls()[0].getVelocity().getY(), TestVectorHor.mirrorOver(Vector.RIGHT).getY());
 		assert(interHor.getBlocks().length == 0);
 		
+		// Cheks when velocity vector is negative in both directions
+		Point centerNeg= new Point(5, 7);
+		Vector negVel = new Vector(-2, -2);
+		BallState[] interNegBall = {new BallState(centerNeg, 1, negVel)};
+		
+		PaddleState paddleNeg = new PaddleState(new Point(9,9), paddlesize);
+		
+		BreakoutState interNeg = new BreakoutState(interNegBall, blockInter, BRMap, paddleNeg);
+		
+		Vector TestVectorNeg = new Vector(-2, -2);
+		
+		interNeg.tick(0);
+		assertEquals(interNeg.getBalls()[0].getCenter().getX(), 4);
+		assertEquals(interNeg.getBalls()[0].getCenter().getY(), 6);
+		assertEquals(interNeg.getBalls()[0].getVelocity().getX(), TestVectorNeg.mirrorOver(Vector.UP).getX());
+		assertEquals(interNeg.getBalls()[0].getVelocity().getY(), TestVectorNeg.mirrorOver(Vector.UP).getY());
+		assert(interNeg.getBlocks().length == 0);
+		
 		
 		//Checks if ball hits paddle and if ball has sped up
 		// Define objects 
@@ -231,6 +249,48 @@ class BreakoutStateTest {
 		breakout_PR.tick(paddleDirRight);
 		assertEquals(breakout_PR.getBalls()[0].getVelocity().getX(), velocityP.mirrorOver(Vector.DOWN).getX() + (1/5 * paddleDirRight));
 		assertEquals(breakout_PR.getBalls()[0].getVelocity().getY(), velocityP.mirrorOver(Vector.DOWN).getY());
+		
+		
+		
+		//////// Test
+		// Checks when hit from right
+		int diameterTwo = 2;
+		Point BRMap_Two = new Point(25,25);
+		
+		Point TL_Two = new Point(7,6);
+		Point BR_Two = new Point(18,15);
+		
+		Point centerTwo = new Point(16, 13);
+		Vector velocityTwo = new Vector(-5,5); 
+		Point paddlecenterTwo = new Point(13,24);
+		Vector paddlesizeTwo = new Vector(5,1);
+		PaddleState paddleTwo = new PaddleState(paddlecenterTwo, paddlesizeTwo);
+		
+		
+		BallState[] ballsTwo = {new BallState(centerTwo, diameterTwo, velocityTwo)};
+		
+		
+		BlockState[] blocksTwo = {new BlockState(TL_Two, BR_Two)}; 
+		BreakoutState breakoutTwo = new BreakoutState(ballsTwo, blocksTwo, BRMap_Two, paddleTwo);
+		
+		
+		assertEquals(breakoutTwo.IntersectTwo(ballsTwo[0], blocksTwo[0]), Vector.LEFT);
+		
+		// Checks when hit from left
+		BallState[] ballsTwoLeft = {new BallState(new Point(9,13), diameterTwo, new Vector(5,5))};
+		BreakoutState breakoutTwoLeft = new BreakoutState(ballsTwoLeft, blocksTwo, BRMap_Two, paddleTwo);
+		assertEquals(breakoutTwoLeft.IntersectTwo(ballsTwoLeft[0], blocksTwo[0]), Vector.RIGHT);
+		
+		// Checks when hit from top
+		BallState[] ballsTwoTop = {new BallState(new Point(14,9), diameterTwo, new Vector(3,6))};
+		BreakoutState breakoutTwoTop = new BreakoutState(ballsTwoTop, blocksTwo, BRMap_Two, paddleTwo);
+		assertEquals(breakoutTwoTop.IntersectTwo(ballsTwoTop[0], blocksTwo[0]), Vector.DOWN);
+		
+		// Checks when hit from bottom
+		BallState[] ballsTwoBot = {new BallState(new Point(14,13), diameterTwo, new Vector(0,-5))};
+		BreakoutState breakoutTwoBot = new BreakoutState(ballsTwoBot, blocksTwo, BRMap_Two, paddleTwo);
+		assertEquals(breakoutTwoBot.IntersectTwo(ballsTwoBot[0], blocksTwo[0]), Vector.UP);
+		
 		
 		
 	}
