@@ -121,102 +121,164 @@ class BreakoutStateTest {
 		
 				
 		// Test the intersection method
-		int x_first = 3;
-		int y_first = 1; 
-		int velocityX = 2;
-		int velocityY = 2;
-		int topLeft_x = 2;
-		int topLeft_y = 2;
-		int BottomRight_x = 6;
-		int BottomRight_y = 6;
+		/*
+		 * int x_first = 3; int y_first = 1; int velocityX = 2; int velocityY = 2; int
+		 * topLeft_x = 2; int topLeft_y = 2; int BottomRight_x = 6; int BottomRight_y =
+		 * 6;
+		 * 
+		 * Point TopLeftInter = new Point(topLeft_x, topLeft_y); Point BottomRightInter
+		 * = new Point(BottomRight_x, BottomRight_y); BlockState[] blockInter = {new
+		 * BlockState(TopLeftInter, BottomRightInter)};
+		 * 
+		 * Point centerInterTop = new Point(x_first, y_first); Vector centerInterTopVel
+		 * = new Vector(velocityX, velocityY); BallState[] interTopBall = {new
+		 * BallState(centerInterTop, 1,centerInterTopVel)};
+		 * 
+		 * BreakoutState interTop = new BreakoutState(interTopBall, blockInter, BRMap,
+		 * paddle);
+		 * 
+		 * Vector TestVectorTop = new Vector(2,2);
+		 * 
+		 * interTop.tick(0); assertEquals(interTop.getBalls()[0].getCenter().getX(), 4);
+		 * assertEquals(interTop.getBalls()[0].getCenter().getY(), 2);
+		 * assertEquals(interTop.getBalls()[0].getVelocity().getX(),
+		 * TestVectorTop.mirrorOver(Vector.DOWN).getX());
+		 * assertEquals(interTop.getBalls()[0].getVelocity().getY(),
+		 * TestVectorTop.mirrorOver(Vector.DOWN).getY());
+		 * assert(interTop.getBlocks().length == 0);
+		 * 
+		 * 
+		 * 
+		 * Point centerInterLeft = new Point(1, 3); Vector centerInterLeftVel = new
+		 * Vector(2, 2); BallState[] interLeftBall = {new BallState(centerInterLeft, 1,
+		 * centerInterLeftVel)};
+		 * 
+		 * BreakoutState interLeft = new BreakoutState(interLeftBall, blockInter, BRMap,
+		 * paddle);
+		 * 
+		 * Vector TestVectorLeft = new Vector(2,2);
+		 * 
+		 * interLeft.tick(0); assertEquals(interLeft.getBalls()[0].getCenter().getX(),
+		 * 2); assertEquals(interLeft.getBalls()[0].getCenter().getY(), 4);
+		 * assertEquals(interLeft.getBalls()[0].getVelocity().getX(),
+		 * TestVectorLeft.mirrorOver(Vector.RIGHT).getX());
+		 * assertEquals(interLeft.getBalls()[0].getVelocity().getY(),
+		 * TestVectorLeft.mirrorOver(Vector.RIGHT).getY());
+		 * assert(interLeft.getBlocks().length == 0);
+		 * 
+		 * 
+		 * // Line vertical down with crossing on the top. Point centerDown= new
+		 * Point(4, 1); Vector centerDownVel = new Vector(0, 4); BallState[]
+		 * interDownBall = {new BallState(centerDown, 1, centerDownVel)};
+		 * 
+		 * BreakoutState interDown = new BreakoutState(interDownBall, blockInter, BRMap,
+		 * paddle);
+		 * 
+		 * Vector TestVectorDown = new Vector(0, 4);
+		 * 
+		 * interDown.tick(0); assertEquals(interDown.getBalls()[0].getCenter().getX(),
+		 * 4); assertEquals(interDown.getBalls()[0].getCenter().getY(), 2);
+		 * assertEquals(interDown.getBalls()[0].getVelocity().getX(),
+		 * TestVectorDown.mirrorOver(Vector.UP).getX());
+		 * assertEquals(interDown.getBalls()[0].getVelocity().getY(),
+		 * TestVectorDown.mirrorOver(Vector.UP).getY());
+		 * assert(interDown.getBlocks().length == 0);
+		 * 
+		 * 
+		 * // Line horisontal to the left. Point centerHor= new Point(9, 4); Vector
+		 * centerHorVel = new Vector(-4, 0); BallState[] interHorBall = {new
+		 * BallState(centerHor, 1, centerHorVel)};
+		 * 
+		 * BreakoutState interHor = new BreakoutState(interHorBall, blockInter, BRMap,
+		 * paddle);
+		 * 
+		 * Vector TestVectorHor = new Vector(-4, 0);
+		 * 
+		 * interHor.tick(0); assertEquals(interHor.getBalls()[0].getCenter().getX(), 6);
+		 * assertEquals(interHor.getBalls()[0].getCenter().getY(), 4);
+		 * assertEquals(interHor.getBalls()[0].getVelocity().getX(),
+		 * TestVectorHor.mirrorOver(Vector.RIGHT).getX());
+		 * assertEquals(interHor.getBalls()[0].getVelocity().getY(),
+		 * TestVectorHor.mirrorOver(Vector.RIGHT).getY());
+		 * assert(interHor.getBlocks().length == 0);
+		 * 
+		 * // Cheks when velocity vector is negative in both directions Point centerNeg=
+		 * new Point(5, 7); Vector negVel = new Vector(-2, -2); BallState[] interNegBall
+		 * = {new BallState(centerNeg, 1, negVel)};
+		 * 
+		 * PaddleState paddleNeg = new PaddleState(new Point(9,9), paddlesize);
+		 * 
+		 * BreakoutState interNeg = new BreakoutState(interNegBall, blockInter, BRMap,
+		 * paddleNeg);
+		 * 
+		 * Vector TestVectorNeg = new Vector(-2, -2);
+		 * 
+		 * interNeg.tick(0); assertEquals(interNeg.getBalls()[0].getCenter().getX(), 4);
+		 * assertEquals(interNeg.getBalls()[0].getCenter().getY(), 6);
+		 * assertEquals(interNeg.getBalls()[0].getVelocity().getX(),
+		 * TestVectorNeg.mirrorOver(Vector.UP).getX());
+		 * assertEquals(interNeg.getBalls()[0].getVelocity().getY(),
+		 * TestVectorNeg.mirrorOver(Vector.UP).getY());
+		 * assert(interNeg.getBlocks().length == 0);
+		 */
 		
-		Point TopLeftInter = new Point(topLeft_x, topLeft_y);
-		Point BottomRightInter = new Point(BottomRight_x, BottomRight_y);
-		BlockState[] blockInter = {new BlockState(TopLeftInter, BottomRightInter)};
 		
-		Point centerInterTop = new Point(x_first, y_first);
-		Vector centerInterTopVel = new Vector(velocityX, velocityY);
-		BallState[] interTopBall = {new BallState(centerInterTop, 1,centerInterTopVel)};
+		// Tests that the ball gets mirrorer correctly afther intersection with block
 		
-		BreakoutState interTop = new BreakoutState(interTopBall, blockInter, BRMap, paddle);
+		// Checks when hit from right
+		int diameterTwo = 2;
+		Point BRMap_Two = new Point(25,25);
 		
-		Vector TestVectorTop = new Vector(2,2);
+		Point TL_Two = new Point(7,6);
+		Point BR_Two = new Point(18,15);
 		
-		interTop.tick(0);
-		assertEquals(interTop.getBalls()[0].getCenter().getX(), 4);
-		assertEquals(interTop.getBalls()[0].getCenter().getY(), 2);
-		assertEquals(interTop.getBalls()[0].getVelocity().getX(), TestVectorTop.mirrorOver(Vector.DOWN).getX());
-		assertEquals(interTop.getBalls()[0].getVelocity().getY(), TestVectorTop.mirrorOver(Vector.DOWN).getY());
-		assert(interTop.getBlocks().length == 0);
+		Point centerTwo = new Point(21, 8);
+		Vector velocityTwo = new Vector(-5,5); 
+		Point paddlecenterTwo = new Point(13,24);
+		Vector paddlesizeTwo = new Vector(5,1);
+		PaddleState paddleTwo = new PaddleState(paddlecenterTwo, paddlesizeTwo);
 		
 		
-		
-		Point centerInterLeft = new Point(1, 3);
-		Vector centerInterLeftVel = new Vector(2, 2);
-		BallState[] interLeftBall = {new BallState(centerInterLeft, 1, centerInterLeftVel)};
-		
-		BreakoutState interLeft = new BreakoutState(interLeftBall, blockInter, BRMap, paddle);
-		
-		Vector TestVectorLeft = new Vector(2,2);
-		
-		interLeft.tick(0);
-		assertEquals(interLeft.getBalls()[0].getCenter().getX(), 2);
-		assertEquals(interLeft.getBalls()[0].getCenter().getY(), 4);
-		assertEquals(interLeft.getBalls()[0].getVelocity().getX(), TestVectorLeft.mirrorOver(Vector.RIGHT).getX());
-		assertEquals(interLeft.getBalls()[0].getVelocity().getY(), TestVectorLeft.mirrorOver(Vector.RIGHT).getY());
-		assert(interLeft.getBlocks().length == 0);
+		BallState[] ballsTwo = {new BallState(centerTwo, diameterTwo, velocityTwo)};
 		
 		
-		// Line vertical down with crossing on the top.
-		Point centerDown= new Point(4, 1);
-		Vector centerDownVel = new Vector(0, 4);
-		BallState[] interDownBall = {new BallState(centerDown, 1, centerDownVel)};
+		BlockState[] blocksTwo = {new BlockState(TL_Two, BR_Two)}; 
+		BreakoutState breakoutTwo = new BreakoutState(ballsTwo, blocksTwo, BRMap_Two, paddleTwo);
 		
-		BreakoutState interDown = new BreakoutState(interDownBall, blockInter, BRMap, paddle);
-		
-		Vector TestVectorDown = new Vector(0, 4);
-		
-		interDown.tick(0);
-		assertEquals(interDown.getBalls()[0].getCenter().getX(), 4);
-		assertEquals(interDown.getBalls()[0].getCenter().getY(), 2);
-		assertEquals(interDown.getBalls()[0].getVelocity().getX(), TestVectorDown.mirrorOver(Vector.UP).getX());
-		assertEquals(interDown.getBalls()[0].getVelocity().getY(), TestVectorDown.mirrorOver(Vector.UP).getY());
-		assert(interDown.getBlocks().length == 0);
+		breakoutTwo.tick(0);
+		assertEquals(breakoutTwo.getBalls()[0].getVelocity().getX(),velocityTwo.mirrorOver(Vector.LEFT).getX());
+		assertEquals(breakoutTwo.getBalls()[0].getVelocity().getY(),velocityTwo.mirrorOver(Vector.LEFT).getY());
 		
 		
-		// Line horisontal to the left.
-		Point centerHor= new Point(9, 4);
-		Vector centerHorVel = new Vector(-4, 0);
-		BallState[] interHorBall = {new BallState(centerHor, 1, centerHorVel)};
+		// Checks when hit from left
+		Vector velocityTwoLeft = new Vector(5,5);
+		BallState[] ballsTwoLeft = {new BallState(new Point(4,8), diameterTwo, velocityTwoLeft)};
+		BreakoutState breakoutTwoLeft = new BreakoutState(ballsTwoLeft, blocksTwo, BRMap_Two, paddleTwo);
 		
-		BreakoutState interHor = new BreakoutState(interHorBall, blockInter, BRMap, paddle);
+		breakoutTwoLeft.tick(0);
+		assertEquals(breakoutTwoLeft.getBalls()[0].getVelocity().getX(),velocityTwoLeft.mirrorOver(Vector.RIGHT).getX());
+		assertEquals(breakoutTwoLeft.getBalls()[0].getVelocity().getY(),velocityTwoLeft.mirrorOver(Vector.RIGHT).getY());
 		
-		Vector TestVectorHor = new Vector(-4, 0);
 		
-		interHor.tick(0);
-		assertEquals(interHor.getBalls()[0].getCenter().getX(), 6);
-		assertEquals(interHor.getBalls()[0].getCenter().getY(), 4);
-		assertEquals(interHor.getBalls()[0].getVelocity().getX(), TestVectorHor.mirrorOver(Vector.RIGHT).getX());
-		assertEquals(interHor.getBalls()[0].getVelocity().getY(), TestVectorHor.mirrorOver(Vector.RIGHT).getY());
-		assert(interHor.getBlocks().length == 0);
+		// Checks when hit from top
+		Vector velocityTwoTop = new Vector(3,6);
+		BallState[] ballsTwoTop = {new BallState(new Point(11,3), diameterTwo, velocityTwoTop)};
+		BreakoutState breakoutTwoTop = new BreakoutState(ballsTwoTop, blocksTwo, BRMap_Two, paddleTwo);
 		
-		// Cheks when velocity vector is negative in both directions
-		Point centerNeg= new Point(5, 7);
-		Vector negVel = new Vector(-2, -2);
-		BallState[] interNegBall = {new BallState(centerNeg, 1, negVel)};
+		breakoutTwoTop.tick(0);
+		assertEquals(breakoutTwoTop.getBalls()[0].getVelocity().getX(),velocityTwoTop.mirrorOver(Vector.DOWN).getX());
+		assertEquals(breakoutTwoTop.getBalls()[0].getVelocity().getY(),velocityTwoTop.mirrorOver(Vector.DOWN).getY());
 		
-		PaddleState paddleNeg = new PaddleState(new Point(9,9), paddlesize);
+
+		// Checks when hit from bottom
+		Vector velocityTwotBot = new Vector(0,-5);
+		BallState[] ballsTwoBot = {new BallState(new Point(14,18), diameterTwo, velocityTwotBot)};
+		BreakoutState breakoutTwoBot = new BreakoutState(ballsTwoBot, blocksTwo, BRMap_Two, paddleTwo);
+
+		breakoutTwoBot.tick(0);
+		assertEquals(breakoutTwoBot.getBalls()[0].getVelocity().getX(),velocityTwotBot.mirrorOver(Vector.UP).getX());
+		assertEquals(breakoutTwoBot.getBalls()[0].getVelocity().getY(),velocityTwotBot.mirrorOver(Vector.UP).getY());
 		
-		BreakoutState interNeg = new BreakoutState(interNegBall, blockInter, BRMap, paddleNeg);
-		
-		Vector TestVectorNeg = new Vector(-2, -2);
-		
-		interNeg.tick(0);
-		assertEquals(interNeg.getBalls()[0].getCenter().getX(), 4);
-		assertEquals(interNeg.getBalls()[0].getCenter().getY(), 6);
-		assertEquals(interNeg.getBalls()[0].getVelocity().getX(), TestVectorNeg.mirrorOver(Vector.UP).getX());
-		assertEquals(interNeg.getBalls()[0].getVelocity().getY(), TestVectorNeg.mirrorOver(Vector.UP).getY());
-		assert(interNeg.getBlocks().length == 0);
 		
 		
 		//Checks if ball hits paddle and if ball has sped up
@@ -249,49 +311,6 @@ class BreakoutStateTest {
 		breakout_PR.tick(paddleDirRight);
 		assertEquals(breakout_PR.getBalls()[0].getVelocity().getX(), velocityP.mirrorOver(Vector.DOWN).getX() + (1/5 * paddleDirRight));
 		assertEquals(breakout_PR.getBalls()[0].getVelocity().getY(), velocityP.mirrorOver(Vector.DOWN).getY());
-		
-		
-		
-		// Unfisinshed small changes
-		
-		//////// Test
-		// Checks when hit from right
-		int diameterTwo = 2;
-		Point BRMap_Two = new Point(25,25);
-		
-		Point TL_Two = new Point(7,6);
-		Point BR_Two = new Point(18,15);
-		
-		Point centerTwo = new Point(16, 13);
-		Vector velocityTwo = new Vector(-5,5); 
-		Point paddlecenterTwo = new Point(13,24);
-		Vector paddlesizeTwo = new Vector(5,1);
-		PaddleState paddleTwo = new PaddleState(paddlecenterTwo, paddlesizeTwo);
-		
-		
-		BallState[] ballsTwo = {new BallState(centerTwo, diameterTwo, velocityTwo)};
-		
-		
-		BlockState[] blocksTwo = {new BlockState(TL_Two, BR_Two)}; 
-		BreakoutState breakoutTwo = new BreakoutState(ballsTwo, blocksTwo, BRMap_Two, paddleTwo);
-		
-		
-		assertEquals(breakoutTwo.IntersectTwo(ballsTwo[0], blocksTwo[0]), Vector.LEFT);
-		
-		// Checks when hit from left
-		BallState[] ballsTwoLeft = {new BallState(new Point(9,13), diameterTwo, new Vector(5,5))};
-		BreakoutState breakoutTwoLeft = new BreakoutState(ballsTwoLeft, blocksTwo, BRMap_Two, paddleTwo);
-		assertEquals(breakoutTwoLeft.IntersectTwo(ballsTwoLeft[0], blocksTwo[0]), Vector.RIGHT);
-		
-		// Checks when hit from top
-		BallState[] ballsTwoTop = {new BallState(new Point(14,9), diameterTwo, new Vector(3,6))};
-		BreakoutState breakoutTwoTop = new BreakoutState(ballsTwoTop, blocksTwo, BRMap_Two, paddleTwo);
-		assertEquals(breakoutTwoTop.IntersectTwo(ballsTwoTop[0], blocksTwo[0]), Vector.DOWN);
-		
-		// Checks when hit from bottom
-		BallState[] ballsTwoBot = {new BallState(new Point(14,13), diameterTwo, new Vector(0,-5))};
-		BreakoutState breakoutTwoBot = new BreakoutState(ballsTwoBot, blocksTwo, BRMap_Two, paddleTwo);
-		assertEquals(breakoutTwoBot.IntersectTwo(ballsTwoBot[0], blocksTwo[0]), Vector.UP);
 		
 		
 		
