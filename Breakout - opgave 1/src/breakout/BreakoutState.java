@@ -2,10 +2,7 @@ package breakout;
 
 import java.util.Arrays;
 import java.util.ArrayList; // import the ArrayList class
-import java.util.stream.IntStream;
 
-// TODO: implement, document
-//Defensive programming
 /**
  * 
  * Each instance of this class stores a breakout game board.
