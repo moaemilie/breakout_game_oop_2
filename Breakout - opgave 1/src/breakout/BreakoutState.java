@@ -278,23 +278,38 @@ public class BreakoutState {
 		
 		for (int i = 0; i < balls.length; i++) {
 			if(balls[i] != null) {
+				int size = balls[i].getDiameter()/2;
+				Point[] corners = {new Point(balls[i].getCenter().getX() - size, balls[i].getCenter().getY() - size), 
+						new Point(balls[i].getCenter().getX() - size, balls[i].getCenter().getY() + size),
+						new Point(balls[i].getCenter().getX() + size, balls[i].getCenter().getY() + size),
+						new Point(balls[i].getCenter().getX() + size, balls[i].getCenter().getY() - size)};
 				        
 				for (int j=0; j < blocks.length; j++) {
 					
-					if(blocks[j].getTopLeft().getX() < (balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) &&
-							(balls[i].getCenter().getX() + (balls[i].getDiameter()/2)) < blocks[j].getBottomRight().getX() &&
-							blocks[j].getBottomRight().getY() > (balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) &&
-							(balls[i].getCenter().getY() + (balls[i].getDiameter()/2)) > blocks[j].getTopLeft().getY()){
+					boolean intersected = false; 
+					
+					for (int k=0; k < 4; k++) {
 						
-						newCrashBalls[i] = Intersect(balls[i], blocks[j]);}
-	
+						if(blocks[j].getTopLeft().getX() < corners[k].getX() &&
+								blocks[j].getBottomRight().getX() > corners[k].getX() &&
+								blocks[j].getBottomRight().getY() > corners[k].getY() &&
+								blocks[j].getTopLeft().getY() < corners[k].getY()){
+							
+							intersected = true;
+							break;
+							}
+					}
+						
+					if (intersected){
+						newCrashBalls[i] = Intersect(balls[i], blocks[j]);
+					}
 					else {
 						blocksNotHit.add(blocks[j]);
 						BallState newBallState = new BallState(balls[i].getCenter(),
 	                			balls[i].getDiameter(), 
 	                			balls[i].getVelocity());
 	    				newCrashBalls[i] = newBallState;
-					}		
+					}	
 				}
 		}
 		BlockState[] newBlocks = new BlockState[blocksNotHit.size()];
