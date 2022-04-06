@@ -51,4 +51,22 @@ public class BallState {
 	public int getDiameter() {
 		return diameter;
 	}
+		
+	/**
+	 * @post | result.isUpAndLeftFrom(this.getBottomRight())
+	 */
+	public Point getTopLeft(){
+		Vector size = new Vector(this.getDiameter()/2, this.getDiameter()/2);
+		Point topLeft = this.getCenter().minus(size);
+		return topLeft;
+	}
+	
+	/**
+ 
+	 */
+	public Point getBottomRight(){
+		Vector size = new Vector(this.getDiameter()/2, this.getDiameter()/2);
+		Point bottomRight = this.getCenter().plus(size);
+		return bottomRight;
+	}
 }
