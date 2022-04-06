@@ -212,8 +212,6 @@ class BreakoutStateTest {
 		
 		
 		//Checks if ball hits paddle and if ball has sped up
-		
-		// Define objects 
 		int diameterP = 2;
 		Point BRMap_P = new Point(10,10);
 		
