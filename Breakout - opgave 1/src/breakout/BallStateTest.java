@@ -19,7 +19,7 @@ class BallStateTest {
 	}
 	
 	@Test
-	void testTopLeft() {
+	void testCorners() {
 		int diameter = 10;
 		Point center = new Point(6,6);
 		Vector speed = new Vector(3,4);
