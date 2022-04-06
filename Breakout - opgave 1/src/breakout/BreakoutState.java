@@ -113,17 +113,7 @@ public class BreakoutState {
 		int x_before = ball.getCenter().getX() - ball.getVelocity().getX();
 		int y_before = ball.getCenter().getY() - ball.getVelocity().getY();
 		
-		if(x_before >= block.getTopLeft().getX() && x_before <= block.getBottomRight().getX()) {
-			if(y_before <= block.getTopLeft().getY()) {
-				// It has hit the top
-				normal = Vector.DOWN;
-			}
-			else if(y_before >= block.getBottomRight().getY()) {
-				// It has hit the bottom
-				normal = Vector.UP;
-			}
-		}
-		else if(y_before <= block.getBottomRight().getY() && y_before >= block.getTopLeft().getY()) {
+		if(y_before <= block.getBottomRight().getY() && y_before >= block.getTopLeft().getY()) {
 			if(x_before <= block.getTopLeft().getX()) {
 				// it has hit the left wall	
 				normal = Vector.RIGHT;
@@ -213,12 +203,12 @@ public class BreakoutState {
 			
 			if(balls[i] != null) {
 				
-				int size = balls[i].getDiameter()/2;
+				//int size = balls[i].getDiameter()/2;
 				
-				Point[] corners = {new Point(balls[i].getCenter().getX() - size, balls[i].getCenter().getY() - size), 
-						new Point(balls[i].getCenter().getX() - size, balls[i].getCenter().getY() + size),
-						new Point(balls[i].getCenter().getX() + size, balls[i].getCenter().getY() + size),
-						new Point(balls[i].getCenter().getX() + size, balls[i].getCenter().getY() - size)};
+				Point[] corners = {balls[i].getTopLeft(),
+						new Point(balls[i].getTopLeft().getX(), balls[i].getBottomRight().getY()),
+						balls[i].getBottomRight(),
+						new Point(balls[i].getBottomRight().getX(), balls[i].getTopLeft().getY())};
 				
 				for (int j=0; j < blocks.length; j++) {
 					boolean intersected = false;
