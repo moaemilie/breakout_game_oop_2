@@ -2,7 +2,7 @@ package breakout;
 
 
 /**
- * This class represents a ball with a given ´diameter´, ´center´and ´INIT_BALL_VELOCITY´.
+ * This class represents a ball in the game map.
  * 
  * @invar | getDiameter() > 0
  *  
@@ -19,6 +19,9 @@ public class BallState {
 	private final int diameter;
 	
 	/**
+	 * 
+	 * Returns a ball with a given diameter, center and initial ball velocity.
+	 * 
 	 * @pre | diameter > 0 
 	 * 
 	 * @post | getCenter() == center

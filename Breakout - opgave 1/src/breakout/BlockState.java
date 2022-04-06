@@ -1,7 +1,7 @@
 package breakout;
 
 /**
- * This class represents a block with a given top left point and bottom right point.
+ * This class represents a block in the game map.
  *  
  *  @invar | getTopLeft().isUpAndLeftFrom(getBottomRight())
  *  
@@ -17,6 +17,9 @@ public class BlockState {
 	private final Point bottom_right;
 	
 	/**
+	 * 
+	 * Returns a block with a given top left point and bottom right point.
+	 * 
 	 * @pre | top_left.getX() >= 0 
 	 * @pre | top_left.getY() >= 0 
 	 * @pre | top_left.isUpAndLeftFrom(bottom_right)

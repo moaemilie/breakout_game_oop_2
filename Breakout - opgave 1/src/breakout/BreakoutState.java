@@ -29,7 +29,7 @@ public class BreakoutState {
 	
 	/**
 	 * 
-	 * Initialize breakout game with given balls, blocks, bottom right corner and paddle.
+	 * Returns a breakout game with given balls, blocks, bottom right corner and paddle.
 	 * 
 	 * @throws IllegalArgumentException | input_balls == null
 	 * @throws IllegalArgumentException | input_blocks == null
