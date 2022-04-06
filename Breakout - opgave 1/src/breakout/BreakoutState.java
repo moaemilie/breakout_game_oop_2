@@ -1,7 +1,7 @@
 package breakout;
 
 import java.util.Arrays;
-import java.util.ArrayList; // import the ArrayList class
+import java.util.ArrayList;
 
 /**
  * 
@@ -83,12 +83,18 @@ public class BreakoutState {
 		return blocks.clone();
 	}
 	
-	/** Return this breakout state's paddle. */
+	/** Return this breakout state's paddle. 
+	 * 
+	 * @post | result != null
+	 */
 	public PaddleState getPaddle() {
 		return paddle;
 	}
 
-	/** Return the coordinates of this breakout state's bottom right corner. */
+	/** Return the coordinates of this breakout state's bottom right corner. 
+	 * 
+	 * @post | result != null
+	 */
 	public Point getBottomRight() {
 		return bottomRight;
 	}
@@ -96,9 +102,11 @@ public class BreakoutState {
 	/**
 	 * This method checks if two objects intersect.
 	 * 
-	 * @mutates | this
+	 * @pre | ball != null
+	 * @pre | block != null
+	 * @post | result != null
 	 */
-	public BallState Intersect(BallState ball, BlockState block) {
+	private BallState Intersect(BallState ball, BlockState block) {
 		
 		Vector normal = Vector.UP;
 		
@@ -136,17 +144,19 @@ public class BreakoutState {
 			}
 		}
 		
-		return new BallState(ball.getCenter(), ball.getDiameter(),ball.getVelocity().mirrorOver(normal));
+		return new BallState(ball.getCenter(), ball.getDiameter(), ball.getVelocity().mirrorOver(normal));
 	}
 	
 
 	/**
-	 * This method performs movement of a ball, including checks of whether the ball hits any other elements.
+	 * This method performs movement of a ball.
+	 * This includes checking whether ball has hit any other elements, and bounce or remove ball if it has.
 	 * 
 	 * @mutates | this
 	 */
 	public void tick(int paddleDir) {
 		BallState[] newBalls = new BallState[balls.length];
+		
 		for (int i = 0; i < balls.length; i++) {
 			Vector velocity = balls[i].getVelocity();
 			Point center = balls[i].getCenter();
@@ -174,20 +184,19 @@ public class BreakoutState {
 				newBalls[i] = newBallState;
 			}
 		
-		balls = newBalls;
-			
-	}
+		balls = newBalls;	
+		}
+
 		// Checks if the ball hits the bottom and removes the ball
 		ArrayList<BallState> bottomBalls = new ArrayList<BallState>();
 		for (int i = 0 ;i < newBalls.length; i++) {
 			if(newBalls[i].getCenter().getY() + (newBalls[i].getDiameter()/2) <= bottomRight.getY()) {
 				bottomBalls.add(newBalls[i]);
+				}
 			}
-		}
 		BallState[] newBottomBalls = new BallState[bottomBalls.size()];
 		newBottomBalls = bottomBalls.toArray(newBottomBalls);
 		balls = newBottomBalls;
-		
 		
 		// Check if the ball hits a block and removes the block and bounces the ball
 		ArrayList<BlockState> blocksNotHit = new ArrayList<BlockState>();
@@ -210,7 +219,6 @@ public class BreakoutState {
 				for (int j=0; j < blocks.length; j++) {
 					boolean intersected = false;
 					
-					
 					for (int k=0; k < 4; k++) {
 						if(blocks[j].getTopLeft().getX() <= corners[k].getX() &&
 								blocks[j].getBottomRight().getX() >= corners[k].getX() &&
@@ -222,28 +230,25 @@ public class BreakoutState {
 							intersected = true;
 							
 							nrCrashBlock = j;
-							
 							}
 						}
 						
 					if (intersected == false) {
 						blocksNotHit.add(blocks[j]);
-						}
-						
+						}		
 				}
 				
 				if (ballCrashed && nrCrashBlock >= 0){
-					newCrashBalls[i] = Intersect(balls[i], blocks[nrCrashBlock]);
-					
+					newCrashBalls[i] = Intersect(balls[i], blocks[nrCrashBlock]);	
 				}
+				
 				else {
 					BallState newBallState = new BallState(balls[i].getCenter(),
                 			balls[i].getDiameter(), 
                 			balls[i].getVelocity());
     				newCrashBalls[i] = newBallState;
+    				}
 				}
-		}
-			
 			
 		BlockState[] newBlocks = new BlockState[blocksNotHit.size()];
 		newBlocks = blocksNotHit.toArray(newBlocks);
@@ -252,7 +257,6 @@ public class BreakoutState {
 		balls = newCrashBalls;
 		}
 
-		
 		// Check if ball hits paddle, and bounce and speed it up if it does
 		
 		BallState[] newPaddleBalls = new BallState[balls.length];
@@ -265,16 +269,14 @@ public class BreakoutState {
 					Vector newVelocity = balls[i].getVelocity().mirrorOver(Vector.DOWN).plus(new Vector(1/5 * paddleDir, 0));
 					BallState newBallState = new BallState(balls[i].getCenter(), balls[i].getDiameter(), newVelocity);
 					newPaddleBalls[i] = newBallState;
-				}
+					}
 				else {
 					newPaddleBalls[i] = balls[i];
+					}
 				}
 			}
-		}
 		balls = newPaddleBalls;
-		
-				
-	}
+		}
 	
 	/**
 	 * This method moves the paddle 10 steps to the right.
@@ -290,7 +292,7 @@ public class BreakoutState {
 		PaddleState newPaddle = new PaddleState(newCenter, size);
 		
 		this.paddle = newPaddle;
-	}
+		}
 	
 	/**
 	 * This method moves the paddle 10 steps to the left.
@@ -306,7 +308,7 @@ public class BreakoutState {
 		PaddleState newPaddle = new PaddleState(newCenter, size);
 		
 		this.paddle = newPaddle;
-	}
+		}
 	
 	/**
 	 * This method checks if the game is won, by checking if there is no blocks left, but there are balls left.
@@ -314,11 +316,12 @@ public class BreakoutState {
 	public boolean isWon() {
 		if(blocks.length == 0 && balls.length != 0){
 			return true;
-		}
+			}
 		else {
 			return false;
+			}
 		}
-	}
+
 	/**
 	 * This method checks if the game is lost, by looking if there is any balls left.
 	 * 
@@ -326,9 +329,9 @@ public class BreakoutState {
 	public boolean isDead() {
 		if(balls.length == 0){
 			return true;
-		}
+			}
 		else {
 			return false;
+			}
 		}
 	}
-}
