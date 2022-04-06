@@ -194,6 +194,10 @@ public class BreakoutState {
 		BallState[] newCrashBalls = new BallState[balls.length];
 		
 		for (int i = 0; i < balls.length; i++) {
+			
+			boolean ballCrashed = false;
+			int nrCrashBlock = -1;
+			
 			if(balls[i] != null) {
 				
 				int size = balls[i].getDiameter()/2;
@@ -202,36 +206,45 @@ public class BreakoutState {
 						new Point(balls[i].getCenter().getX() - size, balls[i].getCenter().getY() + size),
 						new Point(balls[i].getCenter().getX() + size, balls[i].getCenter().getY() + size),
 						new Point(balls[i].getCenter().getX() + size, balls[i].getCenter().getY() - size)};
-				        
+				
 				for (int j=0; j < blocks.length; j++) {
+					boolean intersected = false;
 					
-					boolean intersected = false; 
 					
 					for (int k=0; k < 4; k++) {
-						
 						if(blocks[j].getTopLeft().getX() <= corners[k].getX() &&
 								blocks[j].getBottomRight().getX() >= corners[k].getX() &&
 								blocks[j].getBottomRight().getY() >= corners[k].getY() &&
 								blocks[j].getTopLeft().getY() <= corners[k].getY()){
 							
+							ballCrashed = true;
+							
 							intersected = true;
-							break;
+							
+							nrCrashBlock = j;
+							
 							}
-					}
+						}
 						
-					if (intersected){
-						newCrashBalls[i] = Intersect(balls[i], blocks[j]);
-						
-					}
-					else {
+					if (intersected == false) {
 						blocksNotHit.add(blocks[j]);
-						BallState newBallState = new BallState(balls[i].getCenter(),
-	                			balls[i].getDiameter(), 
-	                			balls[i].getVelocity());
-	    				newCrashBalls[i] = newBallState;
-					}	
+						}
+						
+				}
+				
+				if (ballCrashed && nrCrashBlock >= 0){
+					newCrashBalls[i] = Intersect(balls[i], blocks[nrCrashBlock]);
+					
+				}
+				else {
+					BallState newBallState = new BallState(balls[i].getCenter(),
+                			balls[i].getDiameter(), 
+                			balls[i].getVelocity());
+    				newCrashBalls[i] = newBallState;
 				}
 		}
+			
+			
 		BlockState[] newBlocks = new BlockState[blocksNotHit.size()];
 		newBlocks = blocksNotHit.toArray(newBlocks);
 		blocks = newBlocks;
