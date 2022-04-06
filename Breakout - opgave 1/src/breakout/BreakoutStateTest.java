@@ -184,7 +184,7 @@ class BreakoutStateTest {
 		assertEquals(breakoutTwoOn.getBalls()[0].getVelocity().getX(),velocityTwoOn.mirrorOver(Vector.DOWN).getX());
 		assertEquals(breakoutTwoOn.getBalls()[0].getVelocity().getY(),velocityTwoOn.mirrorOver(Vector.DOWN).getY());
 		
-
+		// TODO: Make better names
 		// Checks when hit from top after two steps
 		Vector velocityTopA = new Vector(1,2);
 		BallState[] ballsTopA = {new BallState(new Point(11,3), diameterTwo, velocityTopA)};
