@@ -155,6 +155,7 @@ public class BreakoutState {
 	 * @mutates | this
 	 */
 	public void tick(int paddleDir) {
+		
 		BallState[] newBalls = new BallState[balls.length];
 		
 		for (int i = 0; i < balls.length; i++) {
@@ -163,6 +164,7 @@ public class BreakoutState {
 			Point newCenter = new Point(center.getX() + velocity.getX(), center.getY() + velocity.getY());
 			newBalls[i] = new BallState(newCenter, balls[i].getDiameter(), velocity);
 		}
+		balls = newBalls;
 		
 		for (int i = 0; i < newBalls.length; i++) {
 			
@@ -187,6 +189,7 @@ public class BreakoutState {
 		balls = newBalls;	
 		}
 
+		
 		// Checks if the ball hits the bottom and removes the ball
 		ArrayList<BallState> bottomBalls = new ArrayList<BallState>();
 		for (int i = 0 ;i < newBalls.length; i++) {
@@ -198,9 +201,10 @@ public class BreakoutState {
 		newBottomBalls = bottomBalls.toArray(newBottomBalls);
 		balls = newBottomBalls;
 		
+		
 		// Check if the ball hits a block and removes the block and bounces the ball
 		ArrayList<BlockState> blocksNotHit = new ArrayList<BlockState>();
-		BallState[] newCrashBalls = new BallState[balls.length];
+		BallState[] crashBalls = new BallState[balls.length];
 		
 		for (int i = 0; i < balls.length; i++) {
 			
@@ -239,14 +243,14 @@ public class BreakoutState {
 				}
 				
 				if (ballCrashed && nrCrashBlock >= 0){
-					newCrashBalls[i] = Intersect(balls[i], blocks[nrCrashBlock]);	
+					crashBalls[i] = Intersect(balls[i], blocks[nrCrashBlock]);	
 				}
 				
 				else {
 					BallState newBallState = new BallState(balls[i].getCenter(),
                 			balls[i].getDiameter(), 
                 			balls[i].getVelocity());
-    				newCrashBalls[i] = newBallState;
+					crashBalls[i] = newBallState;
     				}
 				}
 			
@@ -254,12 +258,12 @@ public class BreakoutState {
 		newBlocks = blocksNotHit.toArray(newBlocks);
 		blocks = newBlocks;
 		
-		balls = newCrashBalls;
+		balls = crashBalls;
 		}
 
 		// Check if ball hits paddle, and bounce and speed it up if it does
 		
-		BallState[] newPaddleBalls = new BallState[balls.length];
+		BallState[] paddleBalls = new BallState[balls.length];
 		
 		for (int i = 0; i < balls.length; i++) {
 			if(balls[i] != null) {
@@ -268,14 +272,14 @@ public class BreakoutState {
 					
 					Vector newVelocity = balls[i].getVelocity().mirrorOver(Vector.DOWN).plus(new Vector(1/5 * paddleDir, 0));
 					BallState newBallState = new BallState(balls[i].getCenter(), balls[i].getDiameter(), newVelocity);
-					newPaddleBalls[i] = newBallState;
+					paddleBalls[i] = newBallState;
 					}
 				else {
-					newPaddleBalls[i] = balls[i];
+					paddleBalls[i] = balls[i];
 					}
 				}
 			}
-		balls = newPaddleBalls;
+		balls = paddleBalls;
 		}
 	
 	/**
