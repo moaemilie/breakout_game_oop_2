@@ -56,7 +56,10 @@ public class BallState {
 	}
 		
 	/**
+	 * Returns the top left corner of the ball
+	 * 
 	 * @post | result.isUpAndLeftFrom(this.getBottomRight())
+	 * @post | result != null
 	 */
 	public Point getTopLeft(){
 		Vector size = new Vector(this.getDiameter()/2, this.getDiameter()/2);
@@ -65,7 +68,9 @@ public class BallState {
 	}
 	
 	/**
- 
+     * Returns the bottom right corner of the ball
+     * 
+     * @post | result != null
 	 */
 	public Point getBottomRight(){
 		Vector size = new Vector(this.getDiameter()/2, this.getDiameter()/2);
