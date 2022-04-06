@@ -9,6 +9,7 @@ class BreakoutStateTest {
 
 	@Test
 	void test() {
+		// Initialize objects for the tests
 		int diameter = 2;
 		Point center = new Point(1,1);
 		Vector speed = new Vector(3,3); 
@@ -23,21 +24,23 @@ class BreakoutStateTest {
 		PaddleState paddle = new PaddleState(paddlecenter, paddlesize);
 		BreakoutState breakout = new BreakoutState(balls, blocks, BRMap, paddle);
 		
-		// Test that the get methods
+		// Test that the get methods returns correct objects
 		assert breakout.getBalls()[0].getCenter().equals(balls[0].getCenter());
 		assert breakout.getBlocks()[0].getTopLeft().equals(blocks[0].getTopLeft());
 		assert breakout.getBlocks()[0].getBottomRight().equals(blocks[0].getBottomRight());
 		assertEquals(breakout.getPaddle(), paddle);
 		assertEquals(breakout.getBottomRight(), BRMap);
 		
-		// Test that the velocity is not changed after the tick method
+		
+		// Test that center has changed and the velocity not changed after the tick method
 		BallState[] MovedBalls = {new BallState(new Point(4,4), diameter, speed)};
 		breakout.tick(0);
 		assert breakout.getBalls()[0].getCenter().equals(MovedBalls[0].getCenter());
 		assertEquals(breakout.getBalls()[0].getVelocity().getX(), MovedBalls[0].getVelocity().getX());
 		assertEquals(breakout.getBalls()[0].getVelocity().getY(), MovedBalls[0].getVelocity().getY());
 		
-		// Test that the paddle is moved left and right afther the methodes is called
+	
+		// Test that the paddle is moved left and right after the methods are called
 		Point paddle_center = breakout.getPaddle().getCenter();
 		breakout.movePaddleRight();
 		assertEquals(breakout.getPaddle().getCenter().getX(), paddle_center.getX()+10);
@@ -46,8 +49,8 @@ class BreakoutStateTest {
 		breakout.movePaddleLeft();
 		assertEquals(breakout.getPaddle().getCenter().getX(), old_paddle_center.getX()-10);
 		
-		
-		// Test the if the ball hits the walls/top
+
+		// Test if the ball hits the walls/top in tick
 		
 		// Test hits the right wall
 		Point BallNR = new Point(9,1);
@@ -66,7 +69,7 @@ class BreakoutStateTest {
 		assertEquals(breakoutNL.getBalls()[0].getVelocity().getX(), speedNL.mirrorOver(Vector.LEFT).getX());
 		assertEquals(breakoutNL.getBalls()[0].getVelocity().getY(), speedNL.mirrorOver(Vector.LEFT).getY());
 		
-		// Test hits the Top wall
+		// Test hits the top wall
 		Point BallT = new Point(2,2);
 		Vector speedT = new Vector(0, -4);
 		BallState[] ballsT = {new BallState(BallT, diameter, speedT)};
@@ -81,9 +84,7 @@ class BreakoutStateTest {
 		
 		BallState[] ballsDown = {new BallState(BallDown, diameter, speedDown)};
 		BreakoutState breakoutDown = new BreakoutState(ballsDown, blocks, BRMap, paddle);
-		
 		breakoutDown.tick(0);
-		
 		assert(breakoutNR.getBalls().length == 1);
 		assert(breakoutDown.getBalls().length == 0);
 		
@@ -115,13 +116,12 @@ class BreakoutStateTest {
 		breakoutNotWon.tick(0);
 		assert(breakoutNotWon.isWon() == false);
 		
-		// Chechs that the you are dead if the game is not won
+		// Checks that the you are dead if the game is not won
 		assert(breakoutNotWon.isDead() == true);
 		
 		
+		// Tests that the ball gets mirrored correctly after intersection with block
 
-		// Tests that the ball gets mirrorer correctly afther intersection with block
-		
 		// Checks when hit from right
 		int diameterInt = 2;
 		Point BRMap_Int = new Point(25,25);
@@ -134,10 +134,7 @@ class BreakoutStateTest {
 		Point paddlecenterInt = new Point(13,24);
 		Vector paddlesizeInt = new Vector(5,1);
 		PaddleState paddleInt = new PaddleState(paddlecenterInt, paddlesizeInt);
-		
-		
 		BallState[] ballsInt = {new BallState(centerInt, diameterInt, velocityInt)};
-		
 		
 		BlockState[] blocksInt = {new BlockState(TL_Int, BR_Int)}; 
 		BreakoutState breakoutInt = new BreakoutState(ballsInt, blocksInt, BRMap_Int, paddleInt);
@@ -145,7 +142,6 @@ class BreakoutStateTest {
 		breakoutInt.tick(0);
 		assertEquals(breakoutInt.getBalls()[0].getVelocity().getX(),velocityInt.mirrorOver(Vector.LEFT).getX());
 		assertEquals(breakoutInt.getBalls()[0].getVelocity().getY(),velocityInt.mirrorOver(Vector.LEFT).getY());
-		
 		
 		// Checks when hit from left
 		Vector velocityIntLeft = new Vector(5,5);
@@ -156,7 +152,6 @@ class BreakoutStateTest {
 		assertEquals(breakoutIntLeft.getBalls()[0].getVelocity().getX(),velocityIntLeft.mirrorOver(Vector.RIGHT).getX());
 		assertEquals(breakoutIntLeft.getBalls()[0].getVelocity().getY(),velocityIntLeft.mirrorOver(Vector.RIGHT).getY());
 		
-		
 		// Checks when hit from top
 		Vector velocityIntTop = new Vector(3,6);
 		BallState[] ballsIntTop = {new BallState(new Point(11,3), diameterInt, velocityIntTop)};
@@ -165,7 +160,6 @@ class BreakoutStateTest {
 		breakoutIntTop.tick(0);
 		assertEquals(breakoutIntTop.getBalls()[0].getVelocity().getX(),velocityIntTop.mirrorOver(Vector.DOWN).getX());
 		assertEquals(breakoutIntTop.getBalls()[0].getVelocity().getY(),velocityIntTop.mirrorOver(Vector.DOWN).getY());
-		
 
 		// Checks when hit from bottom
 		Vector velocityIntBot = new Vector(0,-5);
@@ -176,8 +170,7 @@ class BreakoutStateTest {
 		assertEquals(breakoutIntBot.getBalls()[0].getVelocity().getX(),velocityIntBot.mirrorOver(Vector.UP).getX());
 		assertEquals(breakoutIntBot.getBalls()[0].getVelocity().getY(),velocityIntBot.mirrorOver(Vector.UP).getY());
 		
-		
-		// Cheks if last point is on the block
+		// Checks if last point is on the block
 		Vector velocityIntOn = new Vector(0,4);
 		BallState[] ballsIntOn = {new BallState(new Point(12,6), diameterInt, velocityIntOn)};
 		BreakoutState breakoutIntOn = new BreakoutState(ballsIntOn, blocksInt, BRMap_Int, paddleInt);
@@ -185,7 +178,6 @@ class BreakoutStateTest {
 		breakoutIntOn.tick(0);
 		assertEquals(breakoutIntOn.getBalls()[0].getVelocity().getX(),velocityIntOn.mirrorOver(Vector.DOWN).getX());
 		assertEquals(breakoutIntOn.getBalls()[0].getVelocity().getY(),velocityIntOn.mirrorOver(Vector.DOWN).getY());
-		
 
 		// Checks when hit from top after two steps
 		Vector velocityTick = new Vector(1,2);
@@ -198,7 +190,6 @@ class BreakoutStateTest {
 		Point TL_Tick = new Point(7,6);
 		Point BR_Tick = new Point(18,15);
 		BlockState[] blocksTick = {new BlockState(TL_Tick, BR_Tick)}; 
-		
 		
 		BreakoutState breakoutTick = new BreakoutState(ballsTick, blocksTick, BRMap_Int, paddleTick);
 		
@@ -220,11 +211,9 @@ class BreakoutStateTest {
 		assertEquals(velocityTick.mirrorOver(Vector.DOWN).getY(), breakoutTick.getBalls()[0].getVelocity().getY());
 		
 		
-		
-		
 		//Checks if ball hits paddle and if ball has sped up
-		// Define objects 
 		
+		// Define objects 
 		int diameterP = 2;
 		Point BRMap_P = new Point(10,10);
 		
@@ -252,10 +241,5 @@ class BreakoutStateTest {
 		breakout_PR.tick(paddleDirRight);
 		assertEquals(breakout_PR.getBalls()[0].getVelocity().getX(), velocityP.mirrorOver(Vector.DOWN).getX() + (1/5 * paddleDirRight));
 		assertEquals(breakout_PR.getBalls()[0].getVelocity().getY(), velocityP.mirrorOver(Vector.DOWN).getY());
-		
-		
 	}
-	
-
-
 }
