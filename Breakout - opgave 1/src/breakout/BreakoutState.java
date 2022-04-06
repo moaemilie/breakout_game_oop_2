@@ -203,8 +203,6 @@ public class BreakoutState {
 			
 			if(balls[i] != null) {
 				
-				//int size = balls[i].getDiameter()/2;
-				
 				Point[] corners = {balls[i].getTopLeft(),
 						new Point(balls[i].getTopLeft().getX(), balls[i].getBottomRight().getY()),
 						balls[i].getBottomRight(),
@@ -257,8 +255,19 @@ public class BreakoutState {
 		
 		for (int i = 0; i < balls.length; i++) {
 			if(balls[i] != null) {
-				if((balls[i].getCenter().getX() > paddle.getTopLeft().getX() && balls[i].getCenter().getX() < paddle.getBottomRight().getX()) &&
-						(balls[i].getCenter().getY() < paddle.getBottomRight().getY() && balls[i].getCenter().getY() > paddle.getTopLeft().getY())) {
+		
+					Point[] corners = {new Point(balls[i].getTopLeft().getX(), balls[i].getBottomRight().getY()),
+							balls[i].getBottomRight()};
+					
+				if((paddle.getTopLeft().getX() <= corners[0].getX() &&
+						paddle.getBottomRight().getX() >= corners[0].getX() &&
+						paddle.getBottomRight().getY() >= corners[0].getY() &&
+						paddle.getTopLeft().getY() <= corners[0].getY()) 
+					|| 
+				   (paddle.getTopLeft().getX() <= corners[1].getX() &&
+						paddle.getBottomRight().getX() >= corners[1].getX() &&
+						paddle.getBottomRight().getY() >= corners[1].getY() &&
+						paddle.getTopLeft().getY() <= corners[1].getY())){
 					
 					Vector newVelocity = balls[i].getVelocity().mirrorOver(Vector.DOWN).plus(new Vector(1/5 * paddleDir, 0));
 					BallState newBallState = new BallState(balls[i].getCenter(), balls[i].getDiameter(), newVelocity);
