@@ -1,7 +1,7 @@
 package breakout;
 
 /**
- * this class represents a Paddle in the game map.
+ * This class represents a Paddle in the game map.
  * 
  * @invar | getTopLeft().getX() < getBottomRight().getX()
  * @invar | getTopLeft().getY() < getBottomRight().getY()
@@ -13,7 +13,7 @@ public class PaddleState {
 	private final Point center;
 	
 	/**
-	 * Returns a Paddle with a given center point and vectore that deside its size.
+	 * Returns a paddle with a given center point and vector that decide its size.
 	 * 
 	 * @pre | center.getX() > 0 
 	 * @pre | center.getY() > 0 
