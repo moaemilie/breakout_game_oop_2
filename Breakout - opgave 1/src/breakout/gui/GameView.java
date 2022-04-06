@@ -136,8 +136,8 @@ public class GameView extends JPanel {
 		//ball
 		g.setColor(Color.red);
 		for (BallState ball : breakoutState.getBalls()) {
-			Point tl = ball.getCenter().minus(new Vector(ball.getDiameter()/2, ball.getDiameter()/2));
-			Point br = ball.getCenter().plus(new Vector(ball.getDiameter()/2, ball.getDiameter()/2)); 
+			Point tl = ball.getTopLeft();
+			Point br = ball.getBottomRight(); 
 			paintBall(g, tl, br);
 		}
 	}
