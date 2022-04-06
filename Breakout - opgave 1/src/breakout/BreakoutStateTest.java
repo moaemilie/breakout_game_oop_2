@@ -30,12 +30,12 @@ class BreakoutStateTest {
 		assertEquals(breakout.getPaddle(), paddle);
 		assertEquals(breakout.getBottomRight(), BRMap);
 		
-		// Test that the velocity is updated after the tick method
-		BallState[] newBalls = {new BallState(new Point(4,4), diameter, speed)};
+		// Test that the velocity is not changed after the tick method
+		BallState[] MovedBalls = {new BallState(new Point(4,4), diameter, speed)};
 		breakout.tick(0);
-		assert breakout.getBalls()[0].getCenter().equals(newBalls[0].getCenter());
-		assertEquals(breakout.getBalls()[0].getVelocity().getX(), newBalls[0].getVelocity().getX());
-		assertEquals(breakout.getBalls()[0].getVelocity().getY(), newBalls[0].getVelocity().getY());
+		assert breakout.getBalls()[0].getCenter().equals(MovedBalls[0].getCenter());
+		assertEquals(breakout.getBalls()[0].getVelocity().getX(), MovedBalls[0].getVelocity().getX());
+		assertEquals(breakout.getBalls()[0].getVelocity().getY(), MovedBalls[0].getVelocity().getY());
 		
 		// Test that the paddle is moved left and right afther the methodes is called
 		Point paddle_center = breakout.getPaddle().getCenter();
@@ -175,6 +175,50 @@ class BreakoutStateTest {
 		assertEquals(breakoutTwoBot.getBalls()[0].getVelocity().getY(),velocityTwotBot.mirrorOver(Vector.UP).getY());
 		
 		
+		// Cheks if last point is on the block
+		Vector velocityTwoOn = new Vector(0,4);
+		BallState[] ballsTwoOn = {new BallState(new Point(12,6), diameterTwo, velocityTwoOn)};
+		BreakoutState breakoutTwoOn = new BreakoutState(ballsTwoOn, blocksTwo, BRMap_Two, paddleTwo);
+
+		breakoutTwoOn.tick(0);
+		assertEquals(breakoutTwoOn.getBalls()[0].getVelocity().getX(),velocityTwoOn.mirrorOver(Vector.DOWN).getX());
+		assertEquals(breakoutTwoOn.getBalls()[0].getVelocity().getY(),velocityTwoOn.mirrorOver(Vector.DOWN).getY());
+		
+
+		// Checks when hit from top after two steps
+		Vector velocityTopA = new Vector(1,2);
+		BallState[] ballsTopA = {new BallState(new Point(11,3), diameterTwo, velocityTopA)};
+		
+		Point paddlecenterTwoA = new Point(13,24);
+		Vector paddlesizeTwoA = new Vector(5,1);
+		PaddleState paddleTwoA = new PaddleState(paddlecenterTwoA, paddlesizeTwoA);
+		
+		Point TL_TwoA = new Point(7,6);
+		Point BR_TwoA = new Point(18,15);
+		BlockState[] blocksTwoA = {new BlockState(TL_TwoA, BR_TwoA)}; 
+		
+		
+		BreakoutState breakoutTopA = new BreakoutState(ballsTopA, blocksTwoA, BRMap_Two, paddleTwoA);
+		
+		for(int i = 0; i < 3; ++i) {
+			breakoutTopA.tick(0);
+		}
+		
+		assertEquals(1,breakoutTopA.getBalls().length);
+		assert(breakoutTopA.getBalls()[0] != null);
+		assertEquals(0,breakoutTopA.getBlocks().length);
+		
+		assertEquals(14,breakoutTopA.getBalls()[0].getCenter().getX());
+		assertEquals(1,breakoutTopA.getBalls()[0].getCenter().getY());
+		
+		assertEquals(1,breakoutTopA.getBalls()[0].getVelocity().getX());
+		assertEquals(-2,breakoutTopA.getBalls()[0].getVelocity().getY());
+		
+		assertEquals(velocityTopA.mirrorOver(Vector.DOWN).getX(), breakoutTopA.getBalls()[0].getVelocity().getX());
+		assertEquals(velocityTopA.mirrorOver(Vector.DOWN).getY(), breakoutTopA.getBalls()[0].getVelocity().getY());
+		
+		
+		
 		
 		//Checks if ball hits paddle and if ball has sped up
 		// Define objects 
@@ -206,7 +250,6 @@ class BreakoutStateTest {
 		breakout_PR.tick(paddleDirRight);
 		assertEquals(breakout_PR.getBalls()[0].getVelocity().getX(), velocityP.mirrorOver(Vector.DOWN).getX() + (1/5 * paddleDirRight));
 		assertEquals(breakout_PR.getBalls()[0].getVelocity().getY(), velocityP.mirrorOver(Vector.DOWN).getY());
-		
 		
 		
 	}
