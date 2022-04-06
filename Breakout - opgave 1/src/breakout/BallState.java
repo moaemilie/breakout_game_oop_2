@@ -2,7 +2,7 @@ package breakout;
 
 
 /**
- * This class represents a ball with a given Â´diameterÂ´, Â´centerÂ´and Â´INIT_BALL_VELOCITYÂ´.
+ * This class represents a ball with a given ´diameter´, ´center´and ´INIT_BALL_VELOCITY´.
  * 
  * @invar | getDiameter() > 0
  *  
